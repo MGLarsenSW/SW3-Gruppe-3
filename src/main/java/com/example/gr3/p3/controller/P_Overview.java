@@ -1,14 +1,14 @@
 package com.example.gr3.p3.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class P_Overview {
-
-    @RequestMapping("/ProjectOverview")
-    public String ProjectOverview() {
-        return "ProjectOverview_View";
+    @GetMapping
+    String getProjects(Model model) {
+        model.addAttribute("Projects", "This is the project overview");
+        return "ProjectOverview";
     }
-
 }
