@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class P_Overview {
-    @GetMapping
+    @GetMapping("/ProjectOverview")
     String getProjects(Model model) {
         model.addAttribute("Projects", "This is the project overview");
         return "ProjectOverview";
