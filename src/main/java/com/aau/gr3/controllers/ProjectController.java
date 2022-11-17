@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ProjectController {
-    @GetMapping("/ProjectOverview")
+    @GetMapping("/new")
     String getProjects(Model model) {
         model.addAttribute("Projects", "bliblop" );
         return "ProjectOverview";
