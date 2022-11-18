@@ -8,11 +8,17 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-2">
-                <img src="../static/pictures/Rammus.png" th:src="@{pictures/Rammus.png}" />
-                <label th:text="${Projects}" />
-            </div>
-            <div>
+
+            <div class="card" style="width: 22rem;">
+                <img src="../static/pictures/Rammus.png" th:src="@{pictures/Rammus.png}" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${Project0}" />
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" ></li>
+                        <li class="list-group-item" th:text="${Creation0}"/>
+                        <li class="list-group-item" th:text="${Deadline0}" />
+                    </ul>
+                </div>
 
             </div>
         </div>
