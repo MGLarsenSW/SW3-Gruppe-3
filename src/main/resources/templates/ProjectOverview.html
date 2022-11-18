@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-<h1 th:text="${Projects}" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-2">
+                <img src="../static/pictures/Rammus.png" th:src="@{pictures/Rammus.png}" />
+                <label th:text="${Projects}" />
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>
