@@ -5,25 +5,38 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class Connection {
-    private MongoClientURI connectionString = new MongoClientURI("<insert URI>");
-    private MongoClient mongoClient;
-    public MongoDatabase database;
-    public MongoCollection<Document> collection;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
-    // Constructor: Connection("graintec", "Project");
-    public Connection(String database, String collection) {
-        this.mongoClient = new MongoClient(connectionString);
-        this.database = mongoClient.getDatabase(database);
-        this.collection = this.database.getCollection(collection);
+public class Connection {
+    private MongoClient mongoClient;
+    private MongoDatabase database;
+    private MongoCollection<Document> collection;
+
+    public Connection() {
     }
 
-    public MongoClient establish(){
-        System.out.println("Connection established");
-        return mongoClient;
+    public MongoCollection<Document> read(String collection){
+        this.database = mongoClient.getDatabase("graintec");
+        this.collection = this.database.getCollection(collection);
+        return this.collection;
     }
     public void close(){
         this.mongoClient.close();
         System.out.println("Connection closed");
+    }
+    public void establish(){
+        String directory = "src/main/resources/ProviderName";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(directory));
+            String URI = br.readLine();
+            br.close();
+
+            this.mongoClient = new MongoClient(new MongoClientURI(URI));
+            System.out.println("Connection established");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
