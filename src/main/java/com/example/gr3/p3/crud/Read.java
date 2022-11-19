@@ -4,33 +4,44 @@ import com.example.gr3.p3.classes.Overview;
 import com.example.gr3.p3.classes.Project;
 import com.example.gr3.p3.classes.Supplier;
 import com.example.gr3.p3.util.Connection;
-import com.mongodb.client.MongoCollection;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Projections;
 import org.bson.Document;
-
+import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Read {
-    public List<Overview> getOverview(){
+import static com.mongodb.client.model.Filters.eq;
+
+public class Read extends Connection{
+    public List<Overview> getOverview() {
         List<Overview> overviewList = new ArrayList<>();
 
         try {
-            Connection connection = new Connection();
-            connection.establish();
-            MongoCollection<Document> document = connection.read("Project");
+            super.database = super.mongoClient.getDatabase("graintec");
+            super.collection = super.database.getCollection("Project");
 
-            for (Document doc : document.find()) {
-                Overview overview = new Overview(doc.getInteger("_id"), doc.getString("projectName"),
-                        doc.getDate("creationDate"), doc.getDate("deadlineDate"));
+            // Create a projection to include only the fields we want
+            Bson filter = Projections.fields(
+                    Projections.include("projectName", "creationDate", "deadlineDate")
+            );
 
-                overviewList.add(overview);
+            // Iterate through the documents in the collection and add them to the list<Overview>
+            for (Document document : super.collection.find().projection(filter)) {
+                overviewList.add(new Overview(
+                        document.getInteger("_id"),
+                        document.getString("projectName"),
+                        document.getDate("creationDate"),
+                        document.getDate("deadlineDate")
+                ));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return overviewList;
     }
-
+    // TODO: Only for testing currently
     public void printOverview(List<Overview> list){
         for (Overview overview : list) {
             System.out.println("ID: " + overview.get_id());
@@ -39,38 +50,48 @@ public class Read {
             System.out.println("Deadline date: " + overview.getDeadlineDate());
         }
     }
-
-    public void getProject(){
+    public Project getProject(int _id){
         try {
-            Connection connection = new Connection();
-            connection.establish();
-            MongoCollection<Document> document = connection.read("Project");
-            MongoCollection<Document> supplier = connection.read("Supplier");
+            super.database = super.mongoClient.getDatabase("graintec");
+            super.collection = super.database.getCollection("Project");
+            Document projectDocument = super.collection.find(eq("_id", _id)).first();
 
-            for (Document doc : document.find()) {
-                Project project = new Project(doc.getInteger("_id"), doc.getString("projectName"), doc.getString("supply"),
-                        doc.getString("supplier"), doc.getString("contactMail"), doc.getString("contactPerson"),
-                        doc.getDate("deadlineDate"), doc.getDate("QADate"));
+            return new Project(projectDocument.getInteger("_id"), projectDocument.getString("projectName"),
+                getSuppliers(_id), projectDocument.getDate("deadlineDate"), projectDocument.getDate("QADate"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("No project found");
+        return null;
+    }
+    //TODO : Only for testing currently
+    public void printProject(Project projectDocument){
+        System.out.println("ID: " + projectDocument.get_id());
+        System.out.println("Project name: " + projectDocument.getProjectName());
+        System.out.println("Supplier list: " + projectDocument.getSuppliers());
+        System.out.println("Deadline date: " + projectDocument.getDeadlineDate());
+        System.out.println("QAdate : " + projectDocument.getQADate());
+    }
+    public List<Supplier> getSuppliers(int pid){
+        List<Supplier> supplierList = new ArrayList<>();
+
+        try {
+            super.database = super.mongoClient.getDatabase("graintec");
+            super.collection = super.database.getCollection("Supplier");
+
+            FindIterable<Document> supplierListDocument = super.collection.find(eq("pid", pid));
+
+            for (Document supplier : supplierListDocument) {
+                Supplier supplierDocument = new Supplier(supplier.getObjectId("_id"), supplier.getInteger("pid"), supplier.getString("contactPerson"),
+                        supplier.getString("contactMail"), supplier.getString("supplier"), supplier.getString("supply"),
+                        supplier.getBoolean("stateRFI"), supplier.getBoolean("stateTender"), supplier.getBoolean("stateQuotation"),
+                        supplier.getBoolean("stateContract"), supplier.getBoolean("stateReminder"), supplier.getBoolean("stateQA"));
+                supplierList.add(supplierDocument);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return supplierList;
     }
-    /*
-    public void printOverview(){
-        System.out.println("ID: " + project.get_id());
-        System.out.println("Project name: " + project.getProjectName());
-        System.out.println("Supply: " + project.getSupply());
-        System.out.println("Supplier: " + project.getSupplier());
-        System.out.println("Contact mail: " + project.getContactMail());
-        System.out.println("Contact person: " + project.getContactPerson());
-        System.out.println("Deadline date: " + project.getDeadlineDate());
-        System.out.println("QA date: " + project.getQADate());
-        System.out.println("RFI: " + project.isStateRFI());
-        System.out.println("Tender: " + project.isStateTender());
-        System.out.println("QA: " + project.isStateQA());
-        System.out.println("Reminder: " + project.isStateReminder());
-        System.out.println("Quotation: " + project.isStateQuotation());
-        System.out.println("Contract: " + project.isStateContract());
-    }*/
 }
