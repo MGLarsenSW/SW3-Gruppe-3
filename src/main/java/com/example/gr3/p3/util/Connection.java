@@ -28,6 +28,7 @@ public class Connection {
             br.close();
 
             this.mongoClient = new MongoClient(new MongoClientURI(URI));
+            this.database = this.mongoClient.getDatabase("graintec");
             System.out.println("Connection established");
         } catch (Exception e) {
             e.printStackTrace();
