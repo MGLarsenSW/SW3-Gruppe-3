@@ -6,11 +6,11 @@ import java.util.List;
 public class Project {
     private int _id;
     private String projectName;
-    private List<Supplier> supplierList;
+    private List<State> supplierList;
     private Date deadlineDate;
     private Date QADate;
 
-    public Project(int _id, String projectName, List<Supplier> supplierList, Date deadlineDate,
+    public Project(int _id, String projectName, List<State> supplierList, Date deadlineDate,
                    Date QADate) {
         this._id = _id;
         this.projectName = projectName;
@@ -27,7 +27,7 @@ public class Project {
         return projectName;
     }
 
-    public List<Supplier> getSuppliers() {
+    public List<State> getSuppliers() {
         return supplierList;
     }
 
