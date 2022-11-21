@@ -1,8 +1,6 @@
 package com.example.gr3.p3.crud;
 
-import com.example.gr3.p3.classes.Overview;
-import com.example.gr3.p3.classes.Project;
-import com.example.gr3.p3.classes.Supplier;
+import com.example.gr3.p3.classes.*;
 import com.example.gr3.p3.util.Connection;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Projections;
@@ -11,15 +9,14 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class Read extends Connection{
     public List<Overview> getOverview() {
-        List<Overview> overviewList = new ArrayList<>();
-
         try {
-            super.database = super.mongoClient.getDatabase("graintec");
             super.collection = super.database.getCollection("Project");
+            List<Overview> overviewList = new ArrayList<>();
 
             // Create a projection to include only the fields we want
             Bson filter = Projections.fields(
@@ -36,10 +33,12 @@ public class Read extends Connection{
                 ));
             }
 
+            return overviewList;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return overviewList;
+        return null;
     }
     // TODO: Only for testing currently
     public void printOverview(List<Overview> list){
@@ -52,7 +51,6 @@ public class Read extends Connection{
     }
     public Project getProject(int _id){
         try {
-            super.database = super.mongoClient.getDatabase("graintec");
             super.collection = super.database.getCollection("Project");
             Document projectDocument = super.collection.find(eq("_id", _id)).first();
 
@@ -73,25 +71,62 @@ public class Read extends Connection{
         System.out.println("Deadline date: " + projectDocument.getDeadlineDate());
         System.out.println("QAdate : " + projectDocument.getQADate());
     }
-    public List<Supplier> getSuppliers(int pid){
-        List<Supplier> supplierList = new ArrayList<>();
-
+    public List<State> getSuppliers(int pid){
         try {
-            super.database = super.mongoClient.getDatabase("graintec");
             super.collection = super.database.getCollection("Supplier");
+            List<State> supplierList = new ArrayList<>();
 
-            FindIterable<Document> supplierListDocument = super.collection.find(eq("pid", pid));
+            // Create a projection to exclude Scoring Object
+            Bson filter = Projections.fields(
+                    Projections.exclude("Scoring")
+            );
+
+            FindIterable<Document> supplierListDocument = super.collection.find(eq("pid", pid)).projection(filter);
 
             for (Document supplier : supplierListDocument) {
-                Supplier supplierDocument = new Supplier(supplier.getObjectId("_id"), supplier.getInteger("pid"), supplier.getString("contactPerson"),
+                State supplierDocument = new State(supplier.getObjectId("_id"), supplier.getInteger("pid"), supplier.getString("contactPerson"),
                         supplier.getString("contactMail"), supplier.getString("supplier"), supplier.getString("supply"),
                         supplier.getBoolean("stateRFI"), supplier.getBoolean("stateTender"), supplier.getBoolean("stateQuotation"),
                         supplier.getBoolean("stateContract"), supplier.getBoolean("stateReminder"), supplier.getBoolean("stateQA"));
                 supplierList.add(supplierDocument);
+            return supplierList;
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return supplierList;
+        return null;
+    }
+    public List<Scoring> getScoring(int pid, String supply){
+        try {
+            super.collection = super.database.getCollection("Supplier");
+            List<Scoring> scoringList = new ArrayList<>();
+
+            // Exclude all fields except Scoring and Supplier class fields
+            // TODO: Refactor stateXXX to Object type
+            Bson filter = Projections.fields(
+                    Projections.exclude("stateQA", "stateReminder", "stateContract", "stateQuotation", "stateTender", "stateRFI")
+            );
+
+            // Find the supplier document with the given pid and supply
+            Bson andComparsion = and(eq("pid", pid), eq("supply", supply));
+
+            FindIterable<Document> scoringListDocument = super.collection.find(andComparsion).projection(filter);
+
+            for (Document scoring : scoringListDocument) {
+                Scoring scoringDocument = new Scoring(scoring.getObjectId("_id"), scoring.getInteger("pid"), scoring.getString("contactPerson"),
+                        scoring.getString("contactMail"), scoring.getString("supplier"), scoring.getString("supply"),
+                        scoring.get("Scoring", Document.class).getInteger("guarantee"), scoring.get("Scoring", Document.class).getBoolean("csr"),
+                        scoring.get("Scoring", Document.class).getString("siteErection"), scoring.get("Scoring", Document.class).getInteger("price"),
+                        scoring.get("Scoring", Document.class).getBoolean("board"), scoring.get("Scoring", Document.class).getBoolean("travel"),
+                        scoring.get("Scoring", Document.class).getInteger("score"));
+                scoringList.add(scoringDocument);
+            }
+            return scoringList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
