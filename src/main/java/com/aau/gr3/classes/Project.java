@@ -38,6 +38,4 @@ public class Project {
     public Date getQADate() {
         return QADate;
     }
-
-
 }
