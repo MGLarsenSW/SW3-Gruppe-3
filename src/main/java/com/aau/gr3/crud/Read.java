@@ -132,4 +132,24 @@ public class Read extends Connection{
         }
         return null;
     }
+    public int getNextID(){
+        try{
+            super.collection = super.database.getCollection("Project");
+
+            Bson filter = Projections.fields(
+                    Projections.include("_id")
+            );
+
+            // Return document with highest _id and return as int + 1
+            return super.collection
+                    .find()
+                    .projection(filter)
+                    .sort(new Document("_id", -1))
+                    .first()
+                    .getInteger("_id") + 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
