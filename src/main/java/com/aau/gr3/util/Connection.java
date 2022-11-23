@@ -16,8 +16,12 @@ public class Connection {
     public Connection() {
     }
     public void close(){
-        this.mongoClient.close();
-        System.out.println("Connection closed");
+        try {
+            this.mongoClient.close();
+            System.out.println("Connection closed");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void establish(){
         String directory = "src/main/resources/ProviderName";
