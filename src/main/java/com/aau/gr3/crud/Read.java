@@ -16,6 +16,10 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class Read extends Connection{
+    /**
+     * Gets a list of all projects in the database
+     * @return - Returns a list of Overview objects. Return null if there is no project(s)
+     */
     public List<Overview> getOverview() {
         try {
             super.collection = super.database.getCollection("Project");
@@ -100,6 +104,12 @@ public class Read extends Connection{
         }
         return null;
     }
+    /**
+     * Gets a list of suppliers from a specific project from the database
+     * @param pid - Project ID
+     * @param supply - Supply name
+     * @return - Returns a list of Scoring objects
+     */
     public List<Scoring> getScoring(int pid, String supply){
         try {
             super.collection = super.database.getCollection("Supplier");
