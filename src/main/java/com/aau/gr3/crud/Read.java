@@ -16,6 +16,7 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class Read extends Connection{
+
     /**
      * Gets a list of all projects in the database
      * @return - Returns a list of Overview objects. Return null if there is no project(s)
@@ -47,6 +48,7 @@ public class Read extends Connection{
         }
         return null;
     }
+
     // TODO: Only for testing currently
     public void printOverview(List<Overview> list){
         for (Overview overview : list) {
@@ -56,13 +58,19 @@ public class Read extends Connection{
             System.out.println("Deadline date: " + overview.getDeadlineDate());
         }
     }
-    public Project getProject(int _id){
+
+    /**
+     * Gets a project from a specific id in the database
+     * @param pid - Project ID
+     * @return - Return a project object. Return null if the project does not exist
+     */
+    public Project getProject(int pid){
         try {
             super.collection = super.database.getCollection("Project");
-            Document projectDocument = super.collection.find(eq("_id", _id)).first();
+            Document projectDocument = super.collection.find(eq("_id", pid)).first();
 
             return new Project(projectDocument.getInteger("_id"), projectDocument.getString("projectName"),
-                getSuppliers(_id), projectDocument.getDate("deadlineDate"), projectDocument.getDate("QADate"));
+                getSuppliers(pid), projectDocument.getDate("deadlineDate"), projectDocument.getDate("QADate"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +78,7 @@ public class Read extends Connection{
         System.out.println("No project found");
         return null;
     }
-    //TODO : Only for testing currently
+    // TODO : Only for testing currently
     public void printProject(Project projectDocument){
         System.out.println("ID: " + projectDocument.get_id());
         System.out.println("Project name: " + projectDocument.getProjectName());
@@ -78,6 +86,7 @@ public class Read extends Connection{
         System.out.println("Deadline date: " + projectDocument.getDeadlineDate());
         System.out.println("QAdate : " + projectDocument.getQADate());
     }
+
     public List<State> getSuppliers(int pid){
         try {
             super.collection = super.database.getCollection("Supplier");
@@ -104,11 +113,12 @@ public class Read extends Connection{
         }
         return null;
     }
+
     /**
-     * Gets a list of suppliers from a specific project from the database
+     * Gets a list of suppliers from a specific project id from the database
      * @param pid - Project ID
      * @param supply - Supply name
-     * @return - Returns a list of Scoring objects
+     * @return - Returns a list of Scoring objects. Return null if there is no supplier(s)
      */
     public List<Scoring> getScoring(int pid, String supply){
         try {
@@ -142,6 +152,7 @@ public class Read extends Connection{
         }
         return null;
     }
+
     public int getNextID(){
         try{
             super.collection = super.database.getCollection("Project");
