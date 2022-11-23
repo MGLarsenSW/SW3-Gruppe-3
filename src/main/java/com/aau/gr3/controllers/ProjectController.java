@@ -14,7 +14,10 @@ public class ProjectController {
     @GetMapping("/ProjectOverview")
     String getProjects(Model model) {
         Read read = new Read();
+        read.establish();
         model.addAttribute("Projects", read.getOverview());
+        model.addAttribute("NextID", read.getNextID());
+        read.close();
         return "ProjectOverview";
     }
 }
