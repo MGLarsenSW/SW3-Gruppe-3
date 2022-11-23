@@ -31,13 +31,14 @@ public class Read extends Connection{
                     Projections.include("projectName", "creationDate", "deadlineDate")
             );
 
-            // Iterate through the documents in the collection and add them to the list<Overview>
+            // Iterate through the documents in the collection and map them to the list<Overview>
             for (Document document : super.collection.find().projection(filter)) {
                 overviewList.add(new Overview(
                         document.getInteger("_id"),
                         document.getString("projectName"),
                         document.getDate("creationDate"),
                         document.getDate("deadlineDate")
+                        // TODO: Add image
                 ));
             }
 
@@ -69,8 +70,13 @@ public class Read extends Connection{
             super.collection = super.database.getCollection("Project");
             Document projectDocument = super.collection.find(eq("_id", pid)).first();
 
-            return new Project(projectDocument.getInteger("_id"), projectDocument.getString("projectName"),
-                getSuppliers(pid), projectDocument.getDate("deadlineDate"), projectDocument.getDate("QADate"));
+            return new Project(
+                    projectDocument.getInteger("_id"),
+                    projectDocument.getString("projectName"),
+                    getSuppliers(pid),
+                    projectDocument.getDate("deadlineDate"),
+                    projectDocument.getDate("QADate")
+            );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,6 +93,11 @@ public class Read extends Connection{
         System.out.println("QAdate : " + projectDocument.getQADate());
     }
 
+    /**
+     * Gets a list of all suppliers from a specific project in the database
+     * @param pid - Project ID
+     * @return - Returns a list of suppliers objects. Return null if there is no supplier(s)
+     */
     public List<State> getSuppliers(int pid){
         try {
             super.collection = super.database.getCollection("Supplier");
@@ -99,11 +110,22 @@ public class Read extends Connection{
 
             FindIterable<Document> supplierListDocument = super.collection.find(eq("pid", pid)).projection(filter);
 
+            // Iterate through the documents in the collection and map them to the list<State>
             for (Document supplier : supplierListDocument) {
-                State supplierDocument = new State(supplier.getObjectId("_id"), supplier.getInteger("pid"), supplier.getString("contactPerson"),
-                        supplier.getString("contactMail"), supplier.getString("supplier"), supplier.getString("supply"),
-                        supplier.getBoolean("stateRFI"), supplier.getBoolean("stateTender"), supplier.getBoolean("stateQuotation"),
-                        supplier.getBoolean("stateContract"), supplier.getBoolean("stateReminder"), supplier.getBoolean("stateQA"));
+                State supplierDocument = new State(
+                        supplier.getObjectId("_id"),
+                        supplier.getInteger("pid"),
+                        supplier.getString("contactPerson"),
+                        supplier.getString("contactMail"),
+                        supplier.getString("supplier"),
+                        supplier.getString("supply"),
+                        supplier.get("State", Document.class).getBoolean("RFI"),
+                        supplier.get("State", Document.class).getBoolean("tender"),
+                        supplier.get("State", Document.class).getBoolean("quotation"),
+                        supplier.get("State", Document.class).getBoolean("contract"),
+                        supplier.get("State", Document.class).getBoolean("reminder"),
+                        supplier.get("State", Document.class).getBoolean("QA")
+                );
                 supplierList.add(supplierDocument);
             return supplierList;
 
@@ -125,10 +147,9 @@ public class Read extends Connection{
             super.collection = super.database.getCollection("Supplier");
             List<Scoring> scoringList = new ArrayList<>();
 
-            // Exclude all fields except Scoring and Supplier class fields
-            // TODO: Refactor stateXXX to Object type
+            // Exclude all State objects
             Bson filter = Projections.fields(
-                    Projections.exclude("stateQA", "stateReminder", "stateContract", "stateQuotation", "stateTender", "stateRFI")
+                    Projections.exclude("State")
             );
 
             // Find the supplier document with the given pid and supply
@@ -136,12 +157,21 @@ public class Read extends Connection{
 
             FindIterable<Document> scoringListDocument = super.collection.find(andComparsion).projection(filter);
 
+            // Iterate through the documents in the collection and map them to the list<Scoring>
             for (Document scoring : scoringListDocument) {
-                Scoring scoringDocument = new Scoring(scoring.getObjectId("_id"), scoring.getInteger("pid"), scoring.getString("contactPerson"),
-                        scoring.getString("contactMail"), scoring.getString("supplier"), scoring.getString("supply"),
-                        scoring.get("Scoring", Document.class).getInteger("guarantee"), scoring.get("Scoring", Document.class).getBoolean("csr"),
-                        scoring.get("Scoring", Document.class).getString("siteErection"), scoring.get("Scoring", Document.class).getInteger("price"),
-                        scoring.get("Scoring", Document.class).getBoolean("board"), scoring.get("Scoring", Document.class).getBoolean("travel"),
+                Scoring scoringDocument = new Scoring(
+                        scoring.getObjectId("_id"),
+                        scoring.getInteger("pid"),
+                        scoring.getString("contactPerson"),
+                        scoring.getString("contactMail"),
+                        scoring.getString("supplier"),
+                        scoring.getString("supply"),
+                        scoring.get("Scoring", Document.class).getInteger("guarantee"),
+                        scoring.get("Scoring", Document.class).getBoolean("csr"),
+                        scoring.get("Scoring", Document.class).getString("siteErection"),
+                        scoring.get("Scoring", Document.class).getInteger("price"),
+                        scoring.get("Scoring", Document.class).getBoolean("board"),
+                        scoring.get("Scoring", Document.class).getBoolean("travel"),
                         scoring.get("Scoring", Document.class).getInteger("score"));
                 scoringList.add(scoringDocument);
             }
@@ -153,24 +183,27 @@ public class Read extends Connection{
         return null;
     }
 
+    /**
+     * Gets the highest project id value in the database and increments it by 1
+     * @return - Returns the next project id. Return -1 if there is no project(s)
+     */
     public int getNextID(){
-        try{
+        try {
             super.collection = super.database.getCollection("Project");
 
             Bson filter = Projections.fields(
                     Projections.include("_id")
             );
 
-            // Return document with highest _id and return as int + 1
             return super.collection
                     .find()
                     .projection(filter)
-                    .sort(new Document("_id", -1))
-                    .first()
-                    .getInteger("_id") + 1;
+                    .sort(new Document("_id", -1)) // Sort descending
+                    .first() // Get the first document
+                    .getInteger("_id") + 1; // Return the _id as int + 1
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return -1;
     }
 }
