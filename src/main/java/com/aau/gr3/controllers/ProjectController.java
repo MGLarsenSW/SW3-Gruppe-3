@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -13,14 +14,7 @@ public class ProjectController {
     @GetMapping("/ProjectOverview")
     String getProjects(Model model) {
         Read read = new Read();
-        int project = 0;
-        List<Overview> overviewList = read.getOverview();
-        for (Overview overview : overviewList) {
-            model.addAttribute("Project" + project, overview.get_id() + " - " + overview.getProjectName());
-            model.addAttribute("Creation" + project, "Created: " + overview.getCreationDate());
-            model.addAttribute("Deadline" + project, "Deadline: " + overview.getDeadlineDate());
-            project++;
-        }
+        model.addAttribute("Projects", read.getOverview());
         return "ProjectOverview";
     }
 }
