@@ -5,12 +5,15 @@ import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Scoring;
 import com.aau.gr3.classes.State;
 import com.aau.gr3.util.Connection;
+import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -50,6 +53,26 @@ public class Read extends Connection{
         return null;
     }
 
+    public List<Overview> testGetOverview(){
+        try {
+            // https://www.mongodb.com/docs/drivers/java/sync/v4.6/fundamentals/data-formats/document-data-format-pojo/#summary
+            MongoCollection<Overview> overviewCollection = database.getCollection("Project", Overview.class);
+            List<Overview> overviewList = new ArrayList<>();
+
+            Bson filter = Projections.fields(
+                    Projections.include("projectName", "creationDate", "deadlineDate")
+            );
+
+            overviewCollection.find().projection(filter).into(overviewList);
+
+            return overviewList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     // TODO: Only for testing currently
     public void printOverview(List<Overview> list){
         for (Overview overview : list) {
