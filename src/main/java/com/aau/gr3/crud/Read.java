@@ -1,7 +1,10 @@
-package com.example.gr3.p3.crud;
+package com.aau.gr3.crud;
 
-import com.example.gr3.p3.classes.*;
-import com.example.gr3.p3.util.Connection;
+import com.aau.gr3.classes.Overview;
+import com.aau.gr3.classes.Project;
+import com.aau.gr3.classes.Scoring;
+import com.aau.gr3.classes.State;
+import com.aau.gr3.util.Connection;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;

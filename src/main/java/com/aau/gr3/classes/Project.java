@@ -1,4 +1,4 @@
-package com.example.gr3.p3.classes;
+package com.aau.gr3.classes;
 
 import java.util.Date;
 import java.util.List;

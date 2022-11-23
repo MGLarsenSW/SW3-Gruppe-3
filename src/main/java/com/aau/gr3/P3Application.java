@@ -1,4 +1,4 @@
-package com.example.gr3.p3;
+package com.aau.gr3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

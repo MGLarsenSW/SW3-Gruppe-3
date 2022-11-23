@@ -1,4 +1,4 @@
-package com.example.gr3.p3.util;
+package com.aau.gr3.util;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
