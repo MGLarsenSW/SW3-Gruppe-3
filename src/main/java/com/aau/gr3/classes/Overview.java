@@ -18,6 +18,14 @@ public class Overview {
         this.image = image;
     }
 
+    public Overview(int _id, String projectName, Date creationDate, Date deadlineDate) {
+        this._id = _id;
+        this.projectName = projectName;
+        this.creationDate = creationDate;
+        this.deadlineDate = deadlineDate;
+        this.image = null;
+    }
+
     public int get_id() {
         return _id;
     }
