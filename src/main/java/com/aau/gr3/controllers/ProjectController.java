@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
-    @GetMapping("/ProjectOverview")
+    @GetMapping("/new")
     String getProjects(Model model) {
         Read read = new Read();
         read.establish();
