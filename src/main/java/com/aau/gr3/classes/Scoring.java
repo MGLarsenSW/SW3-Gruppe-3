@@ -22,6 +22,17 @@ public class Scoring extends Supplier {
         this.travel = travel;
         this.score = score;
     }
+    public Scoring(ObjectId _id, int pid, String contactPerson, String contactMail,
+                   String supplier, String supply) {
+        super(_id, pid, contactPerson, contactMail, supplier, supply);
+        this.guarantee = 0;
+        this.csr = false;
+        this.siteErection = "";
+        this.price = 0;
+        this.board = false;
+        this.travel = false;
+        this.score = 0;
+    }
 
     public int getGuarantee() {
         return guarantee;

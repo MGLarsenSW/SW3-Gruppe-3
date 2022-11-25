@@ -8,14 +8,14 @@ public class Overview {
     private String projectName;
     private Date creationDate;
     private Date deadlineDate;
-    private Image image;
+    //private Image image;
 
     public Overview(int _id, String projectName, Date creationDate, Date deadlineDate, Image image) {
         this._id = _id;
         this.projectName = projectName;
         this.creationDate = creationDate;
         this.deadlineDate = deadlineDate;
-        this.image = image;
+        //this.image = image;
     }
 
     public Overview(int _id, String projectName, Date creationDate, Date deadlineDate) {
@@ -23,7 +23,7 @@ public class Overview {
         this.projectName = projectName;
         this.creationDate = creationDate;
         this.deadlineDate = deadlineDate;
-        this.image = null;
+        //this.image = null;
     }
 
     public int get_id() {
@@ -40,10 +40,6 @@ public class Overview {
 
     public Date getDeadlineDate() {
         return deadlineDate;
-    }
-
-    public Image getImage() {
-        return image;
     }
 }
 
