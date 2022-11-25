@@ -1,18 +1,14 @@
 package com.aau.gr3.crud;
 
-import com.aau.gr3.classes.Overview;
-import com.aau.gr3.classes.Project;
-import com.aau.gr3.classes.Scoring;
-import com.aau.gr3.classes.State;
+import com.aau.gr3.classes.*;
 import com.aau.gr3.util.Connection;
-import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class Read extends Connection{
@@ -21,28 +17,18 @@ public class Read extends Connection{
      * Gets a list of all projects in the database
      * @return - Returns a list of Overview objects. Return null if there is no project(s)
      */
-    public List<Overview> getOverview() {
+    public List<Project> getOverview() {
         try {
-            super.collection = super.database.getCollection("Project");
-            List<Overview> overviewList = new ArrayList<>();
+            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            List<Project> overviewList = new ArrayList<>();
 
-            // Create a projection to include only the fields we want
+            // Include only used fields for the overview
             Bson filter = Projections.fields(
-                    Projections.include("projectName", "creationDate", "deadlineDate")
+                    Projections.include("_id", "projectName", "creationDate", "deadlineDate")
             );
-
-            // Iterate through the documents in the collection and add them to the list<Overview>
-            for (Document document : super.collection.find().projection(filter)) {
-                overviewList.add(new Overview(
-                        document.getInteger("_id"),
-                        document.getString("projectName"),
-                        document.getDate("creationDate"),
-                        document.getDate("deadlineDate")
-                ));
-            }
+            projectCollection.find().projection(filter).into(overviewList);
 
             return overviewList;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,12 +36,12 @@ public class Read extends Connection{
     }
 
     // TODO: Only for testing currently
-    public void printOverview(List<Overview> list){
-        for (Overview overview : list) {
-            System.out.println("ID: " + overview.get_id());
-            System.out.println("Project name: " + overview.getProjectName());
-            System.out.println("Creation date: " + overview.getCreationDate());
-            System.out.println("Deadline date: " + overview.getDeadlineDate());
+    public void printOverview(List<Project> list){
+        for (Project project : list) {
+            System.out.println("ID: " + project.getId());
+            System.out.println("Project name: " + project.getProjectName());
+            System.out.println("Creation date: " + project.getCreationDate());
+            System.out.println("Deadline date: " + project.getDeadlineDate());
         }
     }
 
@@ -66,12 +52,12 @@ public class Read extends Connection{
      */
     public Project getProject(int pid){
         try {
-            super.collection = super.database.getCollection("Project");
-            Document projectDocument = super.collection.find(eq("_id", pid)).first();
+            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
 
-            return new Project(projectDocument.getInteger("_id"), projectDocument.getString("projectName"),
-                getSuppliers(pid), projectDocument.getDate("deadlineDate"), projectDocument.getDate("QADate"));
+            // Find the project with the specific id
+            Project project = projectCollection.find(eq("_id", pid)).first();
 
+            return project;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,98 +65,84 @@ public class Read extends Connection{
         return null;
     }
     // TODO : Only for testing currently
-    public void printProject(Project projectDocument){
-        System.out.println("ID: " + projectDocument.get_id());
-        System.out.println("Project name: " + projectDocument.getProjectName());
-        System.out.println("Supplier list: " + projectDocument.getSupplierList());
-        System.out.println("Deadline date: " + projectDocument.getDeadlineDate());
-        System.out.println("QAdate : " + projectDocument.getQADate());
-    }
-
-    public List<State> getSuppliers(int pid){
-        try {
-            super.collection = super.database.getCollection("Supplier");
-            List<State> supplierList = new ArrayList<>();
-
-            // Create a projection to exclude Scoring Object
-            Bson filter = Projections.fields(
-                    Projections.exclude("Scoring")
-            );
-
-            FindIterable<Document> supplierListDocument = super.collection.find(eq("pid", pid)).projection(filter);
-
-            for (Document supplier : supplierListDocument) {
-                State supplierDocument = new State(supplier.getObjectId("_id"), supplier.getInteger("pid"), supplier.getString("contactPerson"),
-                        supplier.getString("contactMail"), supplier.getString("supplier"), supplier.getString("supply"),
-                        supplier.getBoolean("stateRFI"), supplier.getBoolean("stateTender"), supplier.getBoolean("stateQuotation"),
-                        supplier.getBoolean("stateContract"), supplier.getBoolean("stateReminder"), supplier.getBoolean("stateQA"));
-                supplierList.add(supplierDocument);
-            return supplierList;
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void printProject(Project project){
+        System.out.println("ID: " + project.getId());
+        System.out.println("Project name: " + project.getProjectName());
+        System.out.println("Deadline date: " + project.getDeadlineDate());
+        System.out.println("Creation date: " + project.getCreationDate());
+        System.out.println("Quotation date: " + project.getQuotationDate());
+        System.out.println("QA date: " + project.getQaDate());
     }
 
     /**
-     * Gets a list of suppliers from a specific project id from the database
+     * Gets a list of all suppliers in the database
      * @param pid - Project ID
-     * @param supply - Supply name
-     * @return - Returns a list of Scoring objects. Return null if there is no supplier(s)
+     * @return - Returns a list of Supplier objects. Return null if there is no supplier(s)
      */
-    public List<Scoring> getScoring(int pid, String supply){
+    public List<Supplier> getSupplierList(int pid){
         try {
-            super.collection = super.database.getCollection("Supplier");
-            List<Scoring> scoringList = new ArrayList<>();
+            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            List<Supplier> supplierList = new ArrayList<>();
 
-            // Exclude all fields except Scoring and Supplier class fields
-            // TODO: Refactor stateXXX to Object type
-            Bson filter = Projections.fields(
-                    Projections.exclude("stateQA", "stateReminder", "stateContract", "stateQuotation", "stateTender", "stateRFI")
-            );
+            // Find all suppliers with the specific project id
+            supplierCollection.find(eq("pid", pid)).into(supplierList);
 
-            // Find the supplier document with the given pid and supply
-            Bson andComparsion = and(eq("pid", pid), eq("supply", supply));
-
-            FindIterable<Document> scoringListDocument = super.collection.find(andComparsion).projection(filter);
-
-            for (Document scoring : scoringListDocument) {
-                Scoring scoringDocument = new Scoring(scoring.getObjectId("_id"), scoring.getInteger("pid"), scoring.getString("contactPerson"),
-                        scoring.getString("contactMail"), scoring.getString("supplier"), scoring.getString("supply"),
-                        scoring.get("Scoring", Document.class).getInteger("guarantee"), scoring.get("Scoring", Document.class).getBoolean("csr"),
-                        scoring.get("Scoring", Document.class).getString("siteErection"), scoring.get("Scoring", Document.class).getInteger("price"),
-                        scoring.get("Scoring", Document.class).getBoolean("board"), scoring.get("Scoring", Document.class).getBoolean("travel"),
-                        scoring.get("Scoring", Document.class).getInteger("score"));
-                scoringList.add(scoringDocument);
-            }
-            return scoringList;
-
+            return supplierList;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("No supplier found");
         return null;
     }
+    // TODO : Only for testing currently
+    public void printSupplierList(List<Supplier> list){
+        for (Supplier supplier : list){
+            System.out.println("Supplier ID: " + supplier.getId());
+            System.out.println("Project ID: " + supplier.getPid());
+            System.out.println("Contact person: " + supplier.getContactPerson());
+            System.out.println("Contact mail: " + supplier.getContactMail());
+            System.out.println("Supplier name: " + supplier.getSupplierName());
+            System.out.println("Supply: " + supplier.getSupply());
 
+            if (supplier.getState() != null){
+                System.out.println("State: " + supplier.getState());
+                System.out.println(" -> QA: " + supplier.getState().isQa());
+                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+                System.out.println(" -> Contract: " + supplier.getState().isContract());
+                System.out.println(" -> RFI: " + supplier.getState().isRfi());
+                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+            }
+
+            if (supplier.getScoring() != null) {
+                System.out.println("Scoring: " + supplier.getScoring());
+                System.out.println(" -> Price: " + supplier.getScoring().getPrice());
+                System.out.println(" -> Score: " + supplier.getScoring().getScore());
+            }
+        }
+    }
+
+    /**
+     * Gets the highest project ID integer in the database and increments it by 1
+     * @return - Returns the next project ID. Return -1 by default
+     */
     public int getNextID(){
         try{
-            super.collection = super.database.getCollection("Project");
+            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
 
+            // Include only the project id field
             Bson filter = Projections.fields(
                     Projections.include("_id")
             );
 
-            // Return document with highest _id and return as int + 1
-            return super.collection
+            return projectCollection
                     .find()
                     .projection(filter)
-                    .sort(new Document("_id", -1))
+                    .sort(new Document("_id", -1)) // Sort by _id descending
                     .first()
-                    .getInteger("_id") + 1;
+                    .getId() + 1; // Return the highest _id + 1
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return -1;
     }
 }
