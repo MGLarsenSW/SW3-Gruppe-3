@@ -30,8 +30,8 @@ public class Create extends Connection {
                     .append("creationDate", creationDate)
                     .append("deadlineDate", deadlineDate)
             );
-            read.close();
             System.out.println("Project inserted successfully");
+            read.close();
             return true;
 
         } catch (Exception e) {
