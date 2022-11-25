@@ -1,5 +1,6 @@
 package com.aau.gr3.crud;
 
+import com.aau.gr3.classes.State;
 import com.aau.gr3.util.Connection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,15 +19,18 @@ public class Create extends Connection {
      */
     public boolean insertProject(String projectName, Date QADate, Date quotationDate, Date creationDate, Date deadlineDate){
         try {
+            Read read = new Read();
+            read.establish();
             super.collection = super.database.getCollection("Project");
             collection.insertOne(new Document()
-                    .append("_id", new Read().getNextID())
+                    .append("_id", read.getNextID())
                     .append("projectName", projectName)
                     .append("QADate", QADate)
                     .append("quotationDate", quotationDate)
                     .append("creationDate", creationDate)
                     .append("deadlineDate", deadlineDate)
             );
+            read.close();
             System.out.println("Project inserted successfully");
             return true;
 
@@ -41,6 +45,8 @@ public class Create extends Connection {
     public boolean insertSupplier(int pid, String supply, String supplier, String contactPerson, String contactMail){
         try {
             super.collection = super.database.getCollection("Supplier");
+            State state = new State(new ObjectId(), pid, supply, supplier, contactPerson, contactMail);
+
             collection.insertOne(new Document()
                     .append("_id", new ObjectId())
                     .append("supply", supply)
