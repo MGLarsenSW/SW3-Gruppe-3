@@ -13,6 +13,9 @@ public class Project {
     private Date deadlineDate;
 
 
+    public Project(){
+
+    }
     public Project(int _id, String projectName, Date QADate, Date quotationDate,
                    Date creationDate, List<State> supplierList, Date deadlineDate) {
         this._id = _id;
@@ -60,4 +63,15 @@ public class Project {
     public Date getDeadlineDate() {
         return deadlineDate;
     }
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+   /* public void setDeadlineDate(Date deadlineDate) {
+        this.deadlineDate = deadlineDate;
+    }
+
+    public void setQADate(Date QADate) {
+        this.QADate = QADate;
+    }*/
 }

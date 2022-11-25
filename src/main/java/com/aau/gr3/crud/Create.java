@@ -22,8 +22,6 @@ public class Create extends Connection {
             Read read = new Read();
             read.establish();
             super.collection = super.database.getCollection("Project");
-            Read read = new Read();
-            read.establish();
             collection.insertOne(new Document()
                     .append("_id", read.getNextID())
                     .append("projectName", projectName)

@@ -37,14 +37,14 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="image" Value="Submit Image" style="width: 200px; border: 2px solid #555; padding: 50px; margin: 20px;">  <label th:text="${NextID}" /> - <input type="text" placeholder="Project Name" id="projectName" name="projectName"> <br>
-                                        <label>Deadline:</label> <input type="date" id="deadlineDate" name="deadlineDate"> <br><br>
-                                        <label>Q&A date:</label> <input type="date" id="QADate" name="QADate"> <br><br>
-                                        <label>Quotation date:</label> <input type="date">
+                                        <input type="image" Value="Submit Image" style="width: 200px; border: 2px solid #555; padding: 50px; margin: 20px;"/>  <label th:text="${NextID}" /> - <input type="text" placeholder="Project Name" field="*{projectName}" name="projectName"/> <br>
+                                        <label>Deadline:</label> <input type="date" field="*{deadlineDate}" name="deadlineDate"/> <br><br>
+                                        <label>Q&A date:</label> <input type="date" field="*{QADate}" name="QADate"/> <br><br>
+                                        <label>Quotation date:</label> <input type="date" field="*{quotationDate}" name="quotationDate"/>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" value="Submit" class="btn btn-primary">Create</button>
+                                        <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create</button>
                                     </div>
                                 </form>
                             </div>
