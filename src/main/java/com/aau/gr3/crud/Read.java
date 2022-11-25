@@ -88,7 +88,7 @@ public class Read extends Connection{
     public void printProject(Project projectDocument){
         System.out.println("ID: " + projectDocument.get_id());
         System.out.println("Project name: " + projectDocument.getProjectName());
-        System.out.println("Supplier list: " + projectDocument.getSuppliers());
+        System.out.println("Supplier list: " + projectDocument.getSupplierList());
         System.out.println("Deadline date: " + projectDocument.getDeadlineDate());
         System.out.println("QAdate : " + projectDocument.getQADate());
     }
