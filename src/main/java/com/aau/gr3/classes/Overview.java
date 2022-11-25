@@ -25,7 +25,6 @@ public class Overview {
         this.deadlineDate = deadlineDate;
         //this.image = null;
     }
-    public Overview() {}
 
     public int get_id() {
         return _id;
@@ -41,22 +40,6 @@ public class Overview {
 
     public Date getDeadlineDate() {
         return deadlineDate;
-    }
-
-    public void setId(int _id) {
-        this._id = _id;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = deadlineDate;
     }
 }
 
