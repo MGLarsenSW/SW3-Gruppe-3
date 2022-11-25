@@ -17,8 +17,10 @@ public class Create extends Connection {
     public boolean insertProject(String projectName, Date QADate, Date quotationDate, Date creationDate, Date deadlineDate){
         try {
             super.collection = super.database.getCollection("Project");
+            Read read = new Read();
+            read.establish();
             collection.insertOne(new Document()
-                    .append("_id", new Read().getNextID())
+                    .append("_id", read.getNextID())
                     .append("projectName", projectName)
                     .append("QADate", QADate)
                     .append("quotationDate", quotationDate)
@@ -26,6 +28,7 @@ public class Create extends Connection {
                     .append("deadlineDate", deadlineDate)
             );
             System.out.println("Project inserted successfully");
+            read.close();
             return true;
 
         } catch (Exception e) {

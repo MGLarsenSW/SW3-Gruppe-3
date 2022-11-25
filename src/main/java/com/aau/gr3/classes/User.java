@@ -2,6 +2,8 @@ package com.aau.gr3.classes;
 
 // TODO: Implement this at a later stage of development
 
+import java.util.Objects;
+
 public class User {
     protected boolean loginStatus; // boolean (primitive type)
     public String username;
@@ -14,18 +16,23 @@ public class User {
     }
 
     // TODO: Only for testing currently
-    public boolean verifyLogin(){
-        if(this.username == "admin" && this.password == "admin"){
-            return true;
+    public void verifyLogin(){
+        if(Objects.equals(this.username, "admin") && Objects.equals(this.password, "admin")){
+            setLoginStatus(true);
         } else {
-            return false;
+            setLoginStatus(false);
         }
+    }
+    private void setLoginStatus(boolean loginStatus) {
+        this.loginStatus = loginStatus;
     }
 
     public boolean isLoginStatus() {
         return loginStatus;
     }
-
+    public String getPassword() {
+        return password;
+    }
     public String getUsername() {
         return username;
     }
