@@ -123,7 +123,7 @@ public class Read extends Connection{
 
     /**
      * Gets the highest project ID integer in the database and increments it by 1
-     * @return - Returns the next project ID. Return -1 by default
+     * @return - Returns the next project ID. Return 1 by default
      */
     public int getNextID(){
         try{
@@ -143,6 +143,6 @@ public class Read extends Connection{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1;
+        return 1;
     }
 }
