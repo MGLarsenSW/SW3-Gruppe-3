@@ -1,68 +1,49 @@
 package com.aau.gr3.crud;
 
-import com.aau.gr3.classes.State;
+import com.aau.gr3.classes.Project;
+import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.util.Connection;
-import org.bson.Document;
-import org.bson.types.ObjectId;
-
-import java.util.Date;
+import com.mongodb.client.MongoCollection;
 
 public class Create extends Connection {
+
+    // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter
+
     /**
      * Creates a new project in the database
-     * @param projectName - Name of the project
-     * @param QADate - Date of the QA session
-     * @param quotationDate - Date of the quotation
-     * @param creationDate - Date of the creation
-     * @param deadlineDate - Date of the deadline
+     * @param project - Project object
      * @return - Returns true if the project was created successfully otherwise false
      */
-    public boolean insertProject(String projectName, Date QADate, Date quotationDate, Date creationDate, Date deadlineDate){
+    public boolean insertProject(Project project){
         try {
-            Read read = new Read();
-            read.establish();
-            super.collection = super.database.getCollection("Project");
-            collection.insertOne(new Document()
-                    .append("_id", read.getNextID())
-                    .append("projectName", projectName)
-                    .append("QADate", QADate)
-                    .append("quotationDate", quotationDate)
-                    .append("creationDate", creationDate)
-                    .append("deadlineDate", deadlineDate)
-            );
-            System.out.println("Project inserted successfully");
-            read.close();
+            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            projectCollection.insertOne(project);
+            System.out.println("Project created successfully");
             return true;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        System.out.println("Project creation failed");
         return false;
     }
 
-    // TODO: Work in progress
-    public boolean insertSupplier(int pid, String supply, String supplier, String contactPerson, String contactMail){
+    /**
+     * Creates a new supplier in the database
+     * @param supplier - Supplier object
+     * @return - Returns true if the supplier was created successfully otherwise false
+     */
+    public boolean insertSupplier(Supplier supplier){
         try {
-            super.collection = super.database.getCollection("Supplier");
-            State state = new State(new ObjectId(), pid, supply, supplier, contactPerson, contactMail);
-
-            collection.insertOne(new Document()
-                    .append("_id", new ObjectId())
-                    .append("supply", supply)
-                    .append("supplier", supplier)
-                    .append("contactMail", contactMail)
-                    .append("contactPerson", contactPerson)
-                    .append("pid", pid)
-                    .append("Scoring", null)
-                    .append("State", null)
-            );
-            System.out.println("Supplier inserted successfully");
+            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            supplierCollection.insertOne(supplier);
+            System.out.println("Supplier created successfully");
             return true;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Supplier creation failed");
         return false;
     }
 }

@@ -1,43 +1,28 @@
 package com.aau.gr3.classes;
 
-import org.bson.types.ObjectId;
-
-public class State extends Supplier{
-    private boolean RFI;
+public class State{
+    private boolean rfi;
     private boolean tender;
-    private boolean QA;
+    private boolean qa;
     private boolean reminder;
     private boolean quotation;
     private boolean contract;
 
-    public State(ObjectId _id, int pid, String contactPerson, String contactMail,
-                 String supplier, String supply, boolean RFI, boolean tender,
-                 boolean QA, boolean reminder, boolean quotation, boolean contract){
-        super(_id, pid, contactPerson, contactMail, supplier, supply);
-        this.RFI = RFI;
-        this.tender = tender;
-        this.QA = QA;
-        this.reminder = reminder;
-        this.quotation = quotation;
-        this.contract = contract;
-    }
-    public State(ObjectId _id, int pid, String contactPerson, String contactMail,
-                 String supplier, String supply){
-        super(_id, pid, contactPerson, contactMail, supplier, supply);
-        this.RFI = false;
+    public State() {
+        this.rfi = false;
         this.tender = false;
-        this.QA = false;
+        this.qa = false;
         this.reminder = false;
         this.quotation = false;
         this.contract = false;
     }
 
-    public boolean isRFI() {
-        return RFI;
+    public boolean isRfi() {
+        return rfi;
     }
 
-    public void setRFI(boolean RFI) {
-        this.RFI = RFI;
+    public void setRfi(boolean rfi) {
+        this.rfi = rfi;
     }
 
     public boolean isTender() {
@@ -48,12 +33,12 @@ public class State extends Supplier{
         this.tender = tender;
     }
 
-    public boolean isQA() {
-        return QA;
+    public boolean isQa() {
+        return qa;
     }
 
-    public void setQA(boolean QA) {
-        this.QA = QA;
+    public void setQa(boolean qa) {
+        this.qa = qa;
     }
 
     public boolean isReminder() {
