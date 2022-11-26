@@ -19,7 +19,7 @@ public class LoginController {
     public String login(@ModelAttribute(name="user") User user, Model model){
         user.verifyLogin();
         if(user.isLoginStatus()){
-            return "ProjectOverview";
+            return new ProjectController().getProjects(model);
         }
         else {
             return "LoginPage";
