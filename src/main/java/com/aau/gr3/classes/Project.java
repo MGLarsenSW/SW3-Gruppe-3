@@ -5,6 +5,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.util.Date;
 
 public class Project {
+    private String image;
     private int id;
     private String projectName;
     private String qaDate;
@@ -16,13 +17,21 @@ public class Project {
 
     } // Empty constructor for POJO codec
 
-    public Project(int id, String projectName, String qaDate, String quotationDate, String creationDate, String deadlineDate) {
+    public Project(String image ,int id, String projectName, String qaDate, String quotationDate, String creationDate, String deadlineDate) {
+        this.image = image;
         this.id = id;
         this.projectName = projectName;
         this.qaDate = qaDate;
         this.quotationDate = quotationDate;
         this.creationDate = creationDate;
         this.deadlineDate = deadlineDate;
+    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getId() {

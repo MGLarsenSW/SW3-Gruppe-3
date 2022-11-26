@@ -11,19 +11,19 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="shadow-lg p-3 card my-2 mx-2" id="projectCards" style="height: 30rem; width: 22rem;" th:each="project : ${Projects}" >
-                <img src="../static/pictures/Rammus.png" th:src="@{pictures/Rammus.png}" class="card-img-top" />
+        <div class="row justify-content-center">
+            <div class="shadow-lg p-0 card m-4" id="projectCards" style="height: 30rem; width: 22rem;" th:each="project : ${Projects}" >
+                <img th:src="${project.image}" class="card-img-top" style="background-image: url(https://i.imgur.com/JlcxSi6.png)"/>
                 <div class="card-body" >
                     <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" ></li>
-                        <li class="list-group-item" th:text="${project.creationDate}"/>
-                        <li class="list-group-item" th:text="${project.deadlineDate}" />
+                        <li class="list-group-item" th:utext="'&lt;strong&gt;Created: &lt;/strong&gt;' + ${project.creationDate}"/>
+                        <li class="list-group-item" th:utext="'&lt;strong&gt;Deadline: &lt;/strong&gt;' + ${project.deadlineDate}"/>
                     </ul>
                 </div>
             </div>
-            <div class="card my-2 mx-2" style="height: 30rem; width: 22rem;">
+            <div class="shadow-lg p-0 card m-4" style="height: 30rem; width: 22rem;">
                 <div class="card-body">
                     <h5 class="card-title" />
                     <button type="button" class="btn btn-primary position-absolute top-50 start-50 translate-middle" data-toggle="modal" data-target="#exampleModal" >+ Create New Project</button>
@@ -38,7 +38,14 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="image" Value="Submit Image" style="width: 200px; border: 2px solid #555; padding: 50px; margin: 20px;"/>  <label th:text="${NextID}" /> <input type="hidden" field="*{id}" name="id" th:value="${NextID}"> - <input type="text" placeholder="Project Name" field="*{projectName}" name="projectName"/> <br>
+                                        <div class="input-group align-items-center justify-content-center" style="width: 36rem">
+                                            <input type="url" placeholder="Image URL" field="*{image}" name="image" style="width: 200px; border: 2px solid #555; padding: 50px; margin: 20px;"/>
+                                            <div class="input-group-prepend" >
+                                                <span class="input-group-text" id="id-text" th:text="${NextID}" />
+                                                <input type="hidden" field="*{id}" name="id" th:value="${NextID}">
+                                            </div>
+                                            <input type="text" class="form-control" aria-describedby="id-text" placeholder="Project Name" field="*{projectName}" name="projectName"/>
+                                        </div> <br>
                                         <label>Deadline:</label> <input type="date" field="*{deadlineDate}" name="deadlineDate"/> <br><br>
                                         <label>Q&A date:</label> <input type="date" field="*{qaDate}" name="qaDate"/> <br><br>
                                         <label>Quotation date:</label> <input type="date" field="*{quotationDate}" name="quotationDate"/>

@@ -24,7 +24,7 @@ public class Read extends Connection{
 
             // Include only used fields for the overview
             Bson filter = Projections.fields(
-                    Projections.include("_id", "projectName", "creationDate", "deadlineDate")
+                    Projections.include("image" ,"_id", "projectName", "creationDate", "deadlineDate")
             );
             projectCollection.find().projection(filter).into(overviewList);
 
