@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="shadow-lg p-0 card m-4" id="projectCards" style="height: 30rem; width: 22rem;" th:each="project : ${Projects}" >
-                <img th:src="${project.image}" class="card-img-top" style="background-image: url(https://i.imgur.com/JlcxSi6.png)"/>
+                <img th:src="${project.image}" class="card-img-top"/>
                 <div class="card-body" >
                     <a th:href="@{/Project/{id}(id = ${project.id})}" style="text-decoration: none; color:black;" class="stretched-link">
                             <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
