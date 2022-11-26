@@ -1,6 +1,5 @@
 package com.aau.gr3.controllers;
 
-import com.aau.gr3.classes.Overview;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.crud.Create;
 
@@ -29,7 +28,7 @@ public class ProjectController {
     public String CreateProject(@ModelAttribute(name="project") Project project, Model model){
         Create create = new Create();
         create.establish();
-        create.insertProject(project.getProjectName(), project.getQADate(), project.getQuotationDate(),new Date(),project.getDeadlineDate() );
+        create.insertProject(project);
         create.close();
         return getProjects(model);
     }
