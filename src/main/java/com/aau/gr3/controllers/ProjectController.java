@@ -33,5 +33,13 @@ public class ProjectController {
         return getProjects(model);
     }
 
+    @GetMapping("/Project/{id}")
+    String getProject(@PathVariable("id") int id, Model model) {
+        Read read = new Read();
+        read.establish();
+        model.addAttribute("Project", read.getProject(id));
+        read.close();
+        return "ProjectPage";
+    }
 }
 
