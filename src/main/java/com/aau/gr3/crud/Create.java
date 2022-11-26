@@ -5,6 +5,9 @@ import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.util.Connection;
 import com.mongodb.client.MongoCollection;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Create extends Connection {
 
     // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter
@@ -17,6 +20,9 @@ public class Create extends Connection {
     public boolean insertProject(Project project){
         try {
             MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            project.setCreationDate(simpleDateFormat.format(new Date()));
             projectCollection.insertOne(project);
             System.out.println("Project created successfully");
             return true;

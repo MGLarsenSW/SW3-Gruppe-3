@@ -1,5 +1,7 @@
 package com.aau.gr3.classes;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 import java.util.Date;
 
 public class Project {
