@@ -5,16 +5,16 @@ import java.util.Date;
 public class Project {
     private int id;
     private String projectName;
-    private Date qaDate;
-    private Date quotationDate;
-    private Date creationDate;
-    private Date deadlineDate;
+    private String qaDate;
+    private String quotationDate;
+    private String creationDate;
+    private String deadlineDate;
 
     public Project() {
 
     } // Empty constructor for POJO codec
 
-    public Project(int id, String projectName, Date qaDate, Date quotationDate, Date creationDate, Date deadlineDate) {
+    public Project(int id, String projectName, String qaDate, String quotationDate, String creationDate, String deadlineDate) {
         this.id = id;
         this.projectName = projectName;
         this.qaDate = qaDate;
@@ -39,35 +39,35 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public Date getQaDate() {
+    public String getQaDate() {
         return qaDate;
     }
 
-    public void setQaDate(Date qaDate) {
+    public void setQaDate(String qaDate) {
         this.qaDate = qaDate;
     }
 
-    public Date getQuotationDate() {
+    public String getQuotationDate() {
         return quotationDate;
     }
 
-    public void setQuotationDate(Date quotationDate) {
+    public void setQuotationDate(String quotationDate) {
         this.quotationDate = quotationDate;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getDeadlineDate() {
+    public String getDeadlineDate() {
         return deadlineDate;
     }
 
-    public void setDeadlineDate(Date deadlineDate) {
+    public void setDeadlineDate(String deadlineDate) {
         this.deadlineDate = deadlineDate;
     }
 }
