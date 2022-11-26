@@ -15,7 +15,9 @@
             <div class="shadow-lg p-3 card my-2 mx-2" id="projectCards" style="height: 30rem; width: 22rem;" th:each="project : ${Projects}" >
                 <img src="../static/pictures/Rammus.png" th:src="@{pictures/Rammus.png}" class="card-img-top" />
                 <div class="card-body" >
-                    <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
+                    <a th:href="@{/Project/{id}(id = ${project.id})}" style="text-decoration: none; color:black;" class="stretched-link">
+                            <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
+                    </a>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" ></li>
                         <li class="list-group-item" th:text="${project.creationDate}"/>
