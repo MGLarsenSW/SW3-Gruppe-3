@@ -25,7 +25,7 @@
                 </div>
                 <div class="shadow-lg p-0 card m-4" style="height: 26rem; width: 22rem;">
                     <div class="card-body">
-                        <h5 class="card-title" />
+                        <h5 class="card-title"></h5>
                         <button type="button" class="btn btn-primary position-absolute top-50 start-50 translate-middle" data-toggle="modal" data-target="#exampleModal" >+ Create New Project</button>
                         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -38,22 +38,38 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="input-group align-items-center justify-content-center" style="width: 36rem">
-                                                <input type="url" placeholder="Image URL" field="*{image}" name="image" style="width: 200px; border: 2px solid #555; padding: 50px; margin: 20px;"/>
-                                                <div class="input-group-prepend" >
-                                                    <span class="input-group-text" id="id-text" th:text="${NextID}" />
-                                                    <input type="hidden" field="*{id}" name="id" th:value="${NextID}">
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="projectNameLabel">Project ID & Name</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend" >
+                                                            <span class="input-group-text" id="id-text" th:text="${NextID}" />
+                                                            <input type="hidden" field="*{id}" name="id" th:value="${NextID}">
+                                                        </div>
+                                                        <input type="text" class="form-control" aria-describedby="id-text" id="projectNameLabel" placeholder="Salmon Basins Norway" field="*{projectName}" name="projectName" required>
+                                                    </div>
                                                 </div>
-                                                <input type="text" class="form-control" aria-describedby="id-text" placeholder="Project Name" field="*{projectName}" name="projectName"/>
-                                            </div> <br>
-                                            <label>Deadline:</label> <input type="date" field="*{deadlineDate}" name="deadlineDate"/> <br><br>
-                                            <label>Q&A date:</label> <input type="date" field="*{qaDate}" name="qaDate"/> <br><br>
-                                            <label>Quotation date:</label> <input type="date" field="*{quotationDate}" name="quotationDate"/>
-                                        </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="deadlineLabel">Deadline</label>
+                                                    <input type="date" class="form-control" id="deadlineLabel" field="*{deadlineDate}" name="deadlineDate" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="qaDateLabel">Q&A date</label>
+                                                    <input type="date" class="form-control" id="qaDateLabel" field="*{qaDate}" name="qaDate" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="quotationDateLabel">Quotation date</label>
+                                                    <input type="date" class="form-control" id="quotationDateLabel" field="*{quotationDate}" name="quotationDate" required>
+                                                </div>
+                                                <div class="col-auto mb-3">
+                                                    <label for="imageLabel">Image URL (Optional)</label>
+                                                    <input type="url" class="form-control" id="imageLabel" placeholder="https://i.imgur.com/JlcxSi6.png" field="*{image}" name="image">
+                                                </div>
+                                            </div>
                                         <div class="modal-footer">
+                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create Project</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create</button>
-                                        </div>
+                                        </div></div>
                                     </form>
                                 </div>
                             </div>
