@@ -37,7 +37,7 @@ public class ProjectController {
     String getProject(@PathVariable("id") int id, Model model) {
         Read read = new Read();
         read.establish();
-        model.addAttribute("Project", read.getProject(id));
+        model.addAttribute("supplierList", read.getSupplierList(id));
         read.close();
         return "ProjectPage";
     }

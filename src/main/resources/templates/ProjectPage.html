@@ -14,9 +14,9 @@
         <button type="button" class="btn btn-dark">Button</button>
         <button type="button" class="btn btn-dark">Button</button>
     </div>--->
-    <div class="px-5">
-        <!-- TODO: Hardcoded data currently -->
-        <table class="table align-middle text-center" style="width: min(100% - 2rem, 2000px)">
+    <div class="px-5" id="view">
+        <h1 class="display-1 mb-5">Supplier overview</h1>
+        <table class="table align-middle text-center">
             <thead>
                 <tr>
                     <th scope="col">Supply</th>
@@ -26,35 +26,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Steel</th>
-                    <td>Giacomo Guilizzoni APS</td>
-                    <td>Hans Hansen</td>
-                    <td style="width: 50%; padding-top: 3rem">
-                        <div style="width: 100%">
-                            <div class="progress" style="height: 10px;">
-                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width:20%;"></div>
-                                <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width:80%"></div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <button type="button" class="btn btn-sm btn-success rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
-                                <button type="button" class="btn btn-sm btn-success rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
-                            </div>
-                        </div>
+                <tr th:each="supplier : ${supplierList}" >
+                    <th scope="row" th:text="${supplier.supply}" />
+                    <td th:text="${supplier.supplierName}" />
+                    <td>
+                        <a href="#" th:text="${supplier.contactPerson}" data-toggle="tooltip" data-placement="top" title data-original-title="${supplier.contactMail}" />
                     </td>
-                </tr>
-                <tr>
-                    <th scope="row">Steel</th>
-                    <td>MCFS</td>
-                    <td>Kurt Kurtsen</td>
                     <td style="width: 50%; padding-top: 3rem">
                         <div style="width: 100%">
                             <div class="progress" style="height: 10px;">
-                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width:20%;"></div>
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width:20%"></div>
                                 <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width:80%"></div>
                             </div>
                             <div class="row justify-content-between">
