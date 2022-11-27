@@ -6,6 +6,11 @@
     transform: scale(1.15);
     cursor: pointer;
 }
+
+#cardContainer {
+    width: min(100% - 2rem, 2000px);
+}
+
 .card-img-top {
     max-width: 100%;
     height: 16rem;
