@@ -7,7 +7,7 @@
     cursor: pointer;
 }
 
-#cardContainer {
+#view {
     width: min(100% - 2rem, 2000px);
 }
 
