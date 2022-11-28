@@ -26,7 +26,7 @@ public class Read extends Connection{
             Bson filter = Projections.fields(
                     Projections.include("image" ,"_id", "projectName", "creationDate", "deadlineDate")
             );
-            projectCollection.find().projection(filter).into(overviewList);
+            projectCollection.find().projection(filter).sort(new Document("_id", -1)).into(overviewList);
 
             return overviewList;
         } catch (Exception e) {

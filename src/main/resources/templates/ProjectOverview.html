@@ -8,39 +8,27 @@
     <div th:insert="header :: header"></div>
     <div class="px-5" id="view">
         <h1 class="display-1 mb-5">Project overview</h1>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary bi bi-archive-fill disabled"></button>
+        </div>
         <div class="container-fluid" id="cardContainer">
             <div class="row justify-content-center">
-                <div class="shadow-lg p-0 card m-4" id="projectCards" style="height: 26rem; width: 22rem;" th:each="project : ${Projects}" >
-                    <img th:src="${project.image}" class="card-img-top"/>
-                    <div class="card-body" >
-                        <a th:href="@{/Project/{id}(id = ${project.id})}" style="text-decoration: none; color:black;" class="stretched-link">
-                                <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
-                        </a>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" ></li>
-                            <li class="list-group-item" th:utext="'&lt;strong&gt;Created: &lt;/strong&gt;' + ${project.creationDate}"/>
-                            <li class="list-group-item" th:utext="'&lt;strong&gt;Deadline: &lt;/strong&gt;' + ${project.deadlineDate}"/>
-                        </ul>
-                    </div>
-                </div>
                 <div class="shadow-lg p-0 card m-4" style="height: 26rem; width: 22rem;">
                     <div class="card-body">
                         <h5 class="card-title"></h5>
-                        <button type="button" class="btn btn-primary position-absolute top-50 start-50 translate-middle" data-toggle="modal" data-target="#exampleModal" >+ Create New Project</button>
+                        <button type="button" class="btn btn-lg btn-primary rounded-pill position-absolute top-50 start-50 translate-middle bi bi-plus-lg h1" data-toggle="modal" data-target="#exampleModal"> New project</button>
                         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <form action="#" th:action="@{/ProjectOverview}" th:object="${Project}" method="post">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Create a new project</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-row">
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="projectNameLabel">Project ID & Name</label>
+                                                    <label for="projectNameLabel">Project ID & name</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend" >
                                                             <span class="input-group-text" id="id-text" th:text="${NextID}" />
@@ -66,14 +54,28 @@
                                                     <input type="url" class="form-control" id="imageLabel" placeholder="https://i.imgur.com/JlcxSi6.png" field="*{image}" name="image">
                                                 </div>
                                             </div>
-                                        <div class="modal-footer">
-                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create Project</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create project</button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="shadow-lg p-0 card m-4" id="projectCards" style="height: 26rem; width: 22rem;" th:each="project : ${Projects}" >
+                    <img th:src="${project.image}" class="card-img-top"/>
+                    <div class="card-body" >
+                        <a th:href="@{/Project/{id}(id = ${project.id})}" style="text-decoration: none; color:black;" class="stretched-link">
+                                <h5 class="card-title" th:text="${project.id} + ' - ' + ${project.projectName}" />
+                        </a>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" ></li>
+                            <li class="list-group-item bi bi-calendar-plus-fill" th:utext="'&lt;strong&gt; Created: &lt;/strong&gt;' + ${project.creationDate}"/>
+                            <li class="list-group-item bi bi-calendar-check-fill" th:utext="'&lt;strong&gt; Deadline: &lt;/strong&gt;' + ${project.deadlineDate}"/>
+                        </ul>
                     </div>
                 </div>
             </div>
