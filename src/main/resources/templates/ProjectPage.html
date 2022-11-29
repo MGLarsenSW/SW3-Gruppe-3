@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <th:block th:replace="meta :: meta"></th:block>
+    <th:block th:replace="fragments :: meta"></th:block>
     <title>Project</title>
 </head>
 <body>
-    <div th:insert="header :: header"></div>
+    <div th:insert="fragments :: headerProject"></div>
     <!--<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
         <button type="button" class="btn btn-dark">Button</button>
         <button type="button" class="btn btn-dark">Button</button>
@@ -52,6 +52,6 @@
             </tbody>
         </table>
     </div>
-    <div th:insert="footer :: footer"></div>
+    <div th:insert="fragments :: footer"></div>
 </body>
 </html>

@@ -38,6 +38,7 @@ public class ProjectController {
         Read read = new Read();
         read.establish();
         model.addAttribute("supplierList", read.getSupplierList(id));
+        model.addAttribute("project", read.getProject(id));
         read.close();
         return "ProjectPage";
     }
