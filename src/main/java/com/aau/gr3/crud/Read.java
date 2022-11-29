@@ -87,6 +87,10 @@ public class Read extends Connection{
             // Find all suppliers with the specific project id
             supplierCollection.find(eq("pid", pid)).into(supplierList);
 
+            for (Supplier supplier : supplierList){
+                supplier.getState().setPercentage();
+            }
+
             return supplierList;
         } catch (Exception e) {
             e.printStackTrace();

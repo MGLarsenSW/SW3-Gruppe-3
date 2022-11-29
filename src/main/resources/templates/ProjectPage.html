@@ -24,6 +24,7 @@
                     <th scope="col">Contact person</th>
                     <th class="text-center" scope="col">Status</th>
                 </tr>
+                </tr>
             </thead>
             <tbody>
                 <tr th:each="supplier : ${supplierList}" >
@@ -34,17 +35,16 @@
                     </td>
                     <td style="width: 50%; padding-top: 3rem">
                         <div style="width: 100%">
-                            <div class="progress" style="height: 10px;">
-                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width:20%"></div>
-                                <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width:80%"></div>
+                            <div class="progress bg-danger" style="height: 10px;">
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" th:style="|width:${supplier.state.percentage}%|"></div>
                             </div>
                             <div class="row justify-content-between">
-                                <button type="button" class="btn btn-sm btn-success rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
-                                <button type="button" class="btn btn-sm btn-success rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill translate-middle-y" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                         </div>
                     </td>

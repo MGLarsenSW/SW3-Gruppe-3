@@ -7,6 +7,7 @@ public class State{
     private boolean reminder;
     private boolean quotation;
     private boolean contract;
+    private int percentage;
 
     public State() {
         this.rfi = false;
@@ -15,6 +16,7 @@ public class State{
         this.reminder = false;
         this.quotation = false;
         this.contract = false;
+        this.percentage = 0;
     }
 
     public boolean isRfi() {
@@ -63,5 +65,30 @@ public class State{
 
     public void setContract(boolean contract) {
         this.contract = contract;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage() {
+        int percentage = 0;
+
+        if (this.rfi) {
+            percentage += 20;
+        }
+        if (this.tender) {
+            percentage += 20;
+        }
+        if (this.qa) {
+            percentage += 20;
+        }
+        if (this.reminder) {
+            percentage += 20;
+        }
+        if (this.quotation) {
+            percentage += 20;
+        }
+        this.percentage = percentage;
     }
 }
