@@ -19,10 +19,10 @@
         <table class="table align-middle">
             <thead>
                 <tr>
-                    <th scope="col">Supply</th>
-                    <th scope="col">Supplier</th>
-                    <th scope="col">Contact person</th>
-                    <th class="text-center" scope="col">Status</th>
+                    <th class="bi bi-box-seam-fill" scope="col"> Supply</th>
+                    <th class="bi bi-buildings-fill" scope="col"> Supplier</th>
+                    <th class="bi bi-person-vcard-fill" scope="col"> Contact person</th>
+                    <th class="text-center bi bi-list-check" scope="col"> Status</th>
                 </tr>
                 </tr>
             </thead>
@@ -39,12 +39,12 @@
                                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" th:style="|width:${supplier.state.percentage}%|"></div>
                             </div>
                             <div class="row justify-content-between">
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success' : 'btn-danger'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                         </div>
                     </td>
