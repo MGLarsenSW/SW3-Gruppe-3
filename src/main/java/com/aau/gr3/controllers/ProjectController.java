@@ -2,16 +2,10 @@ package com.aau.gr3.controllers;
 
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.crud.Create;
-
 import com.aau.gr3.crud.Read;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ProjectController {
@@ -31,6 +25,16 @@ public class ProjectController {
         create.insertProject(project);
         create.close();
         return getProjects(model);
+    }
+
+    @GetMapping("/ProjectOverview/Archived")
+    String getProjectsArchived(Model model) {
+        Read read = new Read();
+        read.establish();
+        model.addAttribute("Projects", read.getOverview());
+        model.addAttribute("NextID", read.getNextID());
+        read.close();
+        return "ProjectOverviewArchived";
     }
 
     @GetMapping("/Project/{id}")
