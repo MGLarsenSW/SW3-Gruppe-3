@@ -1,72 +1,94 @@
 package com.aau.gr3.classes;
 
-import org.bson.types.ObjectId;
+public class State{
+    private boolean rfi;
+    private boolean tender;
+    private boolean qa;
+    private boolean reminder;
+    private boolean quotation;
+    private boolean contract;
+    private int percentage;
 
-public class State extends Supplier{
-    private boolean stateRFI;
-    private boolean stateTender;
-    private boolean stateQA;
-    private boolean stateReminder;
-    private boolean stateQuotation;
-    private boolean stateContract;
-
-    public State(ObjectId _id, int pid, String contactPerson, String contactMail,
-                 String supplier, String supply, boolean stateRFI, boolean stateTender,
-                 boolean stateQA, boolean stateReminder, boolean stateQuotation, boolean stateContract){
-        super(_id, pid, contactPerson, contactMail, supplier, supply);
-        this.stateRFI = stateRFI;
-        this.stateTender = stateTender;
-        this.stateQA = stateQA;
-        this.stateReminder = stateReminder;
-        this.stateQuotation = stateQuotation;
-        this.stateContract = stateContract;
+    public State() {
+        this.rfi = false;
+        this.tender = false;
+        this.qa = false;
+        this.reminder = false;
+        this.quotation = false;
+        this.contract = false;
+        this.percentage = 0;
     }
 
-    public boolean isStateRFI() {
-        return stateRFI;
+    public boolean isRfi() {
+        return rfi;
     }
 
-    public void setStateRFI(boolean stateRFI) {
-        this.stateRFI = stateRFI;
+    public void setRfi(boolean rfi) {
+        this.rfi = rfi;
     }
 
-    public boolean isStateTender() {
-        return stateTender;
+    public boolean isTender() {
+        return tender;
     }
 
-    public void setStateTender(boolean stateTender) {
-        this.stateTender = stateTender;
+    public void setTender(boolean tender) {
+        this.tender = tender;
     }
 
-    public boolean isStateQA() {
-        return stateQA;
+    public boolean isQa() {
+        return qa;
     }
 
-    public void setStateQA(boolean stateQA) {
-        this.stateQA = stateQA;
+    public void setQa(boolean qa) {
+        this.qa = qa;
     }
 
-    public boolean isStateReminder() {
-        return stateReminder;
+    public boolean isReminder() {
+        return reminder;
     }
 
-    public void setStateReminder(boolean stateReminder) {
-        this.stateReminder = stateReminder;
+    public void setReminder(boolean reminder) {
+        this.reminder = reminder;
     }
 
-    public boolean isStateQuotation() {
-        return stateQuotation;
+    public boolean isQuotation() {
+        return quotation;
     }
 
-    public void setStateQuotation(boolean stateQuotation) {
-        this.stateQuotation = stateQuotation;
+    public void setQuotation(boolean quotation) {
+        this.quotation = quotation;
     }
 
-    public boolean isStateContract() {
-        return stateContract;
+    public boolean isContract() {
+        return contract;
     }
 
-    public void setStateContract(boolean stateContract) {
-        this.stateContract = stateContract;
+    public void setContract(boolean contract) {
+        this.contract = contract;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage() {
+        int percentage = 0;
+
+        if (this.rfi) {
+            percentage += 20;
+        }
+        if (this.tender) {
+            percentage += 20;
+        }
+        if (this.qa) {
+            percentage += 20;
+        }
+        if (this.reminder) {
+            percentage += 20;
+        }
+        if (this.quotation) {
+            percentage += 20;
+        }
+        this.percentage = percentage;
     }
 }

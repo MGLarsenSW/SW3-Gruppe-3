@@ -1,37 +1,55 @@
 package com.aau.gr3.crud;
 
+import com.aau.gr3.classes.Project;
+import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.util.Connection;
-import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Create extends Connection {
+
+    // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter
+
     /**
      * Creates a new project in the database
-     * @param projectName - Name of the project
-     * @param QADate - Date of the QA
-     * @param quotationDate - Date of the quotation
-     * @param creationDate - Date of the creation
-     * @param deadlineDate - Date of the deadline
-     * @return - Returns true if the project was created successfully. Returns false if the project
+     * @param project - Project object
+     * @return - Returns true if the project was created successfully otherwise false
      */
-    public boolean insertProject(String projectName, Date QADate, Date quotationDate, Date creationDate, Date deadlineDate){
+    public boolean insertProject(Project project){
         try {
-            super.collection = super.database.getCollection("Project");
-            collection.insertOne(new Document()
-                    .append("_id", new Read().getNextID())
-                    .append("projectName", projectName)
-                    .append("QADate", QADate)
-                    .append("quotationDate", quotationDate)
-                    .append("creationDate", creationDate)
-                    .append("deadlineDate", deadlineDate)
-            );
-            System.out.println("Project inserted successfully");
+            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            project.setCreationDate(simpleDateFormat.format(new Date()));
+            projectCollection.insertOne(project);
+            System.out.println("Project created successfully");
             return true;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        System.out.println("Project creation failed");
+        return false;
+    }
+
+    /**
+     * Creates a new supplier in the database
+     * @param supplier - Supplier object
+     * @return - Returns true if the supplier was created successfully otherwise false
+     */
+    public boolean insertSupplier(Supplier supplier){
+        try {
+            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            supplierCollection.insertOne(supplier);
+            System.out.println("Supplier created successfully");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Supplier creation failed");
         return false;
     }
 }

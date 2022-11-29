@@ -1,41 +1,84 @@
 package com.aau.gr3.classes;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 import java.util.Date;
-import java.util.List;
 
 public class Project {
-    private int _id;
+    private String image;
+    private int id;
     private String projectName;
-    private List<State> supplierList;
-    private Date deadlineDate;
-    private Date QADate;
+    private String qaDate;
+    private String quotationDate;
+    private String creationDate;
+    private String deadlineDate;
 
-    public Project(int _id, String projectName, List<State> supplierList, Date deadlineDate,
-                   Date QADate) {
-        this._id = _id;
+    public Project() {
+
+    } // Empty constructor for POJO codec
+
+    public Project(String image ,int id, String projectName, String qaDate, String quotationDate, String creationDate, String deadlineDate) {
+        this.image = image;
+        this.id = id;
         this.projectName = projectName;
-        this.supplierList = supplierList;
+        this.qaDate = qaDate;
+        this.quotationDate = quotationDate;
+        this.creationDate = creationDate;
         this.deadlineDate = deadlineDate;
-        this.QADate = QADate;
+    }
+    public String getImage() {
+        return image;
     }
 
-    public int get_id() {
-        return _id;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProjectName() {
         return projectName;
     }
 
-    public List<State> getSuppliers() {
-        return supplierList;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public Date getDeadlineDate() {
+    public String getQaDate() {
+        return qaDate;
+    }
+
+    public void setQaDate(String qaDate) {
+        this.qaDate = qaDate;
+    }
+
+    public String getQuotationDate() {
+        return quotationDate;
+    }
+
+    public void setQuotationDate(String quotationDate) {
+        this.quotationDate = quotationDate;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getDeadlineDate() {
         return deadlineDate;
     }
 
-    public Date getQADate() {
-        return QADate;
+    public void setDeadlineDate(String deadlineDate) {
+        this.deadlineDate = deadlineDate;
     }
 }

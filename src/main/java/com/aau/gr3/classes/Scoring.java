@@ -1,9 +1,7 @@
 package com.aau.gr3.classes;
 
-import org.bson.types.ObjectId;
-
 // TODO: Add more relevant criteria from problem analysis
-public class Scoring extends Supplier {
+public class Scoring {
     private int guarantee;
     private boolean csr;
     private String siteErection;
@@ -11,16 +9,15 @@ public class Scoring extends Supplier {
     private boolean board;
     private boolean travel;
     private int score;
-    public Scoring(ObjectId _id, int pid, String contactPerson, String contactMail,
-                   String supplier, String supply, int guarantee, boolean csr, String siteErection, int price, boolean board, boolean travel, int score) {
-        super(_id, pid, contactPerson, contactMail, supplier, supply);
-        this.guarantee = guarantee;
-        this.csr = csr;
-        this.siteErection = siteErection;
-        this.price = price;
-        this.board = board;
-        this.travel = travel;
-        this.score = score;
+
+    public Scoring() {
+        this.guarantee = 0;
+        this.csr = false;
+        this.siteErection = "";
+        this.price = 0;
+        this.board = false;
+        this.travel = false;
+        this.score = 0;
     }
 
     public int getGuarantee() {
