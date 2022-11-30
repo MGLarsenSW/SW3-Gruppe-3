@@ -43,8 +43,8 @@
       <li class="nav-item dropdown mx-3">
         <a class="nav-link dropdown-toggle text-white" href="#" id="Dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: 'Lufga', Sans-serif; font-size: 24px; font-weight: 400;">Scoring</a>
         <ul class="dropdown-menu" aria-labelledby="Dropdown">
-          <li th:each="supplier : ${supplierList}" >
-            <a class="dropdown-item" href="#" th:text="${supplier.supply}"></a>
+          <li th:each="supply : ${supplyListNoDup}" >
+            <a class="dropdown-item" href="#" th:href="@{/Project/{id}/Scoring/{supply}(supply = ${supply}, (id = ${project.id}))}" th:text="${supply}"></a>
           </li>
         </ul>
       </li>

@@ -7,8 +7,11 @@ import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class Read extends Connection{
@@ -98,6 +101,35 @@ public class Read extends Connection{
         System.out.println("No supplier found");
         return null;
     }
+
+    public List<Supplier> getSupplyList(int pid, String supply){
+        try {
+            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            List<Supplier> supplyList = new ArrayList<>();
+
+            Bson filter = Projections.fields(
+                    Projections.exclude("stateQA", "stateReminder", "stateContract", "stateQuotation", "stateTender", "stateRFI")
+            );
+
+            // Find all suppliers with the specific project id and supply
+            Bson andComparison = and(eq("pid", pid), eq("supply", supply));
+
+            supplierCollection.find(andComparison).projection(filter).into(supplyList);
+
+
+
+            for (Supplier supplier : supplyList){
+                supplier.getState().setPercentage();
+            }
+
+            return supplyList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("No supplier found");
+        return null;
+    }
+
     // TODO : Only for testing currently
     public void printSupplierList(List<Supplier> list){
         for (Supplier supplier : list){

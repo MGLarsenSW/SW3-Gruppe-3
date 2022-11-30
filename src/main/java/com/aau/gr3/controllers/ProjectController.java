@@ -1,6 +1,7 @@
 package com.aau.gr3.controllers;
 
 import com.aau.gr3.classes.Project;
+import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.crud.Create;
 
 import com.aau.gr3.crud.Read;
@@ -37,6 +38,9 @@ public class ProjectController {
     String getProject(@PathVariable("id") int id, Model model) {
         Read read = new Read();
         read.establish();
+        List<Supplier> supplierList = read.getSupplierList(id);
+        List<String> noDuplicates = Arrays.asList(supplierList.stream().map(Supplier::getSupply).distinct().toArray(String[]::new));
+        model.addAttribute("supplyListNoDup", noDuplicates);
         model.addAttribute("supplierList", read.getSupplierList(id));
         model.addAttribute("project", read.getProject(id));
         read.close();
