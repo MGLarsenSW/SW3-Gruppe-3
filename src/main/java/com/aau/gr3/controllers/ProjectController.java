@@ -1,5 +1,6 @@
 package com.aau.gr3.controllers;
 
+import com.aau.gr3.Constants;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.crud.Create;
 import com.aau.gr3.crud.Read;
@@ -42,6 +43,7 @@ public class ProjectController {
         Read read = new Read();
         read.establish();
         model.addAttribute("supplierList", read.getSupplierList(id));
+//        model.addAttribute("constant", Constants.QAEmailTemplate);
         read.close();
         return "ProjectPage";
     }
