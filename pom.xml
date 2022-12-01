@@ -14,7 +14,11 @@
 	<name>SW3-Gruppe-3</name>
 	<description>Spring Boot for p3</description>
 	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+
 		<java.version>19</java.version>
+		<junit.version>5.8.2</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -31,6 +35,27 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.12.11</version>
+    </dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.junit.platform</groupId>-->
+<!--			<artifactId>junit-platform-launcher</artifactId>-->
+<!--			<version>1.8.2</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+    
 	</dependencies>
 
 	<build>
@@ -38,6 +63,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.7.5</version>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <th:block th:replace="fragments :: meta"></th:block>
+    <title>Scoring</title>
+</head>
+<body>
+<div th:insert="fragments :: headerProject"></div>
+<table class="table table-striped">
+    <thead>
+        <tr th:each="supplier : ${supplyList}">
+            <th scope="col" th:text="${supplier.supplierName}">Supplier</th>
+            <th scope="col">Guarantee(year(s))</th>
+            <th scope="col">CSR</th>
+            <th scope="col">Legal T&C's</th>
+            <th scope="col">Site erection</th>
+            <th scope="col">Price</th>
+            <th scope="col">Board & Lodging</th>
+            <th scope="col">Travel Costs</th>
+            <th scope="col">Score</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+
+    </tr>
+    </tbody>
+</table>
+<div th:insert="fragments :: footer"></div>
+</body>
+</html>

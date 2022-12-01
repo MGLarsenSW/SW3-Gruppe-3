@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <th:block th:replace="fragments :: meta"></th:block>
+    <title>Project</title>
+</head>
+<body>
+    <div th:insert="fragments :: headerProject"></div>
+    <!--<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+        <button type="button" class="btn btn-dark">Button</button>
+        <button type="button" class="btn btn-dark">Button</button>
+        <button type="button" class="btn btn-dark">Button</button>
+        <button type="button" class="btn btn-dark">Button</button>
+        <button type="button" class="btn btn-dark">Button</button>
+        <button type="button" class="btn btn-dark">Button</button>
+    </div>--->
+    <div class="px-5" id="view">
+        <h1 class="display-1 mb-5">Supplier overview</h1>
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th class="bi bi-box-seam-fill" scope="col"> Supply</th>
+                    <th class="bi bi-buildings-fill" scope="col"> Supplier</th>
+                    <th class="bi bi-person-vcard-fill" scope="col"> Contact person</th>
+                    <th class="text-center bi bi-list-check" scope="col"> Status</th>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="supplier : ${supplierList}" >
+                    <th scope="row" th:text="${supplier.supply}" />
+                    <td th:text="${supplier.supplierName}" />
+                    <td>
+                        <a href="#" th:text="${supplier.contactPerson}" data-toggle="tooltip" data-placement="top" title data-original-title="${supplier.contactMail}" />
+                    </td>
+                    <td style="width: 50%; padding-top: 3rem">
+                        <div style="width: 100%">
+                            <div class="progress bg-danger" style="height: 10px;">
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" th:style="|width:${supplier.state.percentage}%|"></div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:insert="fragments :: footer"></div>
+</body>
+</html>
