@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <th:block th:replace="meta :: meta"></th:block>
+    <title>Project Overview Archived</title>
+</head>
+<body>
+<div th:insert="header :: header"></div>
+<div class="px-5" id="view">
+    <h1 class="display-1 mb-5">Project overview</h1>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-outline-primary bi bi-card-list" href="/ProjectOverview" role="button"> Project Overview</a>
+    </div>
+    <div class="container-fluid" id="cardContainer">
+        <div class="row justify-content-center">
+            <div class="shadow-lg p-0 card m-4" style="height: 28rem; width: 22rem;">
+                <img src="https://images.thefishsite.com/fish/articles/ras-construction-dennie-delong.jpg" class="card-img-top">
+                <div class="card-body">
+<!--                    <a href="/Project/6" style="text-decoration: none; color:black;" class="stretched-link">-->
+                        <h5 class="card-title">6 - Seafood Hatchery</h5>
+<!--                    </a>-->
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item bi bi-calendar-plus-fill"><strong> Created: </strong>2022-11-26</li>
+                        <li class="list-group-item bi bi-calendar-check-fill"><strong> Deadline: </strong>2021-01-19</li>
+                        <li class="list-group-item">
+                            <button type="button" class="btn btn-primary disabled">Reactivate</button>
+                            <button type="button" class="btn btn-danger disabled">Delete</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="footer :: footer"></div>
+</body>
+</html>

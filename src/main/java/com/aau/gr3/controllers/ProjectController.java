@@ -3,7 +3,6 @@ package com.aau.gr3.controllers;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.crud.Create;
-
 import com.aau.gr3.crud.Read;
 import com.aau.gr3.util.Connection;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,16 @@ public class ProjectController {
         Create create = new Create(Connection.getInstance());
         create.insertProject(project);
         return getProjects(model);
+    }
+
+    @GetMapping("/ProjectOverview/Archived")
+    String getProjectsArchived(Model model) {
+        Read read = new Read();
+        read.establish();
+        model.addAttribute("Projects", read.getOverview());
+        model.addAttribute("NextID", read.getNextID());
+        read.close();
+        return "ProjectOverviewArchived";
     }
 
     @GetMapping("/Project/{id}")
