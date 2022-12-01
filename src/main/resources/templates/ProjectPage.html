@@ -40,10 +40,10 @@
                             </div>
                             <div class="row justify-content-between">
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Scoring</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                         </div>
