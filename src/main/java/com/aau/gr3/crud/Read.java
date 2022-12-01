@@ -137,10 +137,10 @@ public class Read extends Connection{
             if (supplier.getState() != null){
                 System.out.println("State: " + supplier.getState());
                 System.out.println(" -> QA: " + supplier.getState().isQa());
-                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
                 System.out.println(" -> Contract: " + supplier.getState().isContract());
                 System.out.println(" -> RFI: " + supplier.getState().isRfi());
-                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
             }
 
             if (supplier.getScoring() != null) {
