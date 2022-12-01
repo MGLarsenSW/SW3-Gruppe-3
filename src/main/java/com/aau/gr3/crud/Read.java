@@ -108,7 +108,7 @@ public class Read extends Connection{
             List<Supplier> supplyList = new ArrayList<>();
 
             Bson filter = Projections.fields(
-                    Projections.exclude("stateQA", "stateReminder", "stateContract", "stateQuotation", "stateTender", "stateRFI")
+                    Projections.exclude("State")
             );
 
             // Find all suppliers with the specific project id and supply
@@ -116,17 +116,11 @@ public class Read extends Connection{
 
             supplierCollection.find(andComparison).projection(filter).into(supplyList);
 
-
-
-            for (Supplier supplier : supplyList){
-                supplier.getState().setPercentage();
-            }
-
             return supplyList;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("No supplier found");
+        System.out.println("No supply found");
         return null;
     }
 
