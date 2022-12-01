@@ -28,7 +28,40 @@
             </thead>
             <tbody>
                 <tr>
-
+                    <button type="button" class="btn btn-lg btn-primary rounded-pill bi bi-plus-lg h1" data-bs-toggle="modal" data-bs-target="#exampleModal"> New Supplier</button>
+                    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <form action="#" th:action="@{/Project/{id}(id = project.id)}" th:object="${Supplier}" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Create a new supplier</h5>
+                                        <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="supplyLabel">Supply</label>
+                                                <input type="text" class="form-control" id="supplyLabel" field="*{supply}" name="supply" required>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="supplierLabel">Supplier</label>
+                                                <input type="text" class="form-control" id="supplierLabel" field="*{supplierName}" name="supplierName" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactPersonLabel">Contact Person</label>
+                                                <input type="text" class="form-control" id="contactPersonLabel" field="*{contactPerson}" name="contactPerson" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create project</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </tr>
                 <tr th:each="supplier : ${supplierList}" >
                     <th scope="row" th:text="${supplier.supply}" />

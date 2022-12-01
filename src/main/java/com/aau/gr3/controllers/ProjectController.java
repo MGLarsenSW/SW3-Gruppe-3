@@ -46,5 +46,7 @@ public class ProjectController {
         read.close();
         return "ProjectPage";
     }
+    /*@RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
+    public String CreateSupplier(@ModelAttribute(name="supplier")*/
 }
 
