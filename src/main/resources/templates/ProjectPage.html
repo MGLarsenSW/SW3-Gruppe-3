@@ -28,34 +28,40 @@
             </thead>
             <tbody>
                 <tr>
-                    <button type="button" class="btn btn-lg btn-primary rounded-pill bi bi-plus-lg h1" data-bs-toggle="modal" data-bs-target="#exampleModal"> New Supplier</button>
+                    <button type="button" class="btn btn-lg btn-primary rounded-pill bi bi-plus-lg h1" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Supplier</button>
                     <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <form action="#" th:action="@{/Project/{id}(id = project.id)}" th:object="${Supplier}" method="post">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Create a new supplier</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Add a new supplier</h5>
                                         <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="supplyLabel">Supply</label>
-                                                <input type="text" class="form-control" id="supplyLabel" field="*{supply}" name="supply" required>
-                                            </div>
+                                                <input class="form-control" list="previousSupply" id="supplyLabel" field="*{supply}" name="supply" autocomplete="off" required>
+                                                <datalist id="previousSupply">
+                                                    <option th:each="supply : ${supplyListNoDup}" th:value="${supply}">
+                                                </datalist>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="supplierLabel">Supplier</label>
-                                                <input type="text" class="form-control" id="supplierLabel" field="*{supplierName}" name="supplierName" required>
+                                                <input type="text" class="form-control" id="supplierLabel" field="*{supplierName}" name="supplierName" autocomplete="off" required>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="contactPersonLabel">Contact Person</label>
-                                                <input type="text" class="form-control" id="contactPersonLabel" field="*{contactPerson}" name="contactPerson" required>
+                                                <label for="contactPersonLabel">Contact person</label>
+                                                <input type="text" class="form-control" id="contactPersonLabel" field="*{contactPerson}" name="contactPerson" autocomplete="off" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactMailLabel">Contact mail</label>
+                                                <input type="email" class="form-control" id="contactMailLabel" field="*{contactMail}" name="contactMail" autocomplete="off" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create project</button>
+                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Add supplier</button>
                                         </div>
                                     </div>
                                 </form>
@@ -67,7 +73,7 @@
                     <th scope="row" th:text="${supplier.supply}" />
                     <td th:text="${supplier.supplierName}" />
                     <td>
-                        <a href="#" th:text="${supplier.contactPerson}" data-toggle="tooltip" data-placement="top" title data-original-title="${supplier.contactMail}" />
+                        <a href="#" th:text="${supplier.contactPerson}" th:title="${supplier.contactMail}"/>
                     </td>
                     <td style="width: 50%; padding-top: 3rem">
                         <div style="width: 100%">
