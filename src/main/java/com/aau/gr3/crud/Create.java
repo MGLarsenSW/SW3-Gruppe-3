@@ -2,13 +2,19 @@ package com.aau.gr3.crud;
 
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Supplier;
-import com.aau.gr3.util.Connection;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Create extends Connection {
+public class Create {
+
+    private MongoDatabase mongoDatabase;
+
+    public Create(MongoDatabase mongoDatabase) {
+        this.mongoDatabase = mongoDatabase;
+    }
 
     // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter
 
@@ -19,7 +25,7 @@ public class Create extends Connection {
      */
     public boolean insertProject(Project project){
         try {
-            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            MongoCollection<Project> projectCollection = mongoDatabase.getCollection("Project", Project.class);
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             project.setCreationDate(simpleDateFormat.format(new Date()));
@@ -42,7 +48,7 @@ public class Create extends Connection {
      */
     public boolean insertSupplier(Supplier supplier){
         try {
-            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            MongoCollection<Supplier> supplierCollection = mongoDatabase.getCollection("Supplier", Supplier.class);
             supplierCollection.insertOne(supplier);
             System.out.println("Supplier created successfully");
             return true;

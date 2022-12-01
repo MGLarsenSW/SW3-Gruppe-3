@@ -1,9 +1,15 @@
 package com.aau.gr3.crud;
 
-import com.aau.gr3.util.Connection;
+import com.mongodb.client.MongoDatabase;
 import org.bson.types.ObjectId;
 
-public class Delete extends Connection {
+public class Delete {
+
+    private MongoDatabase mongoDatabase;
+
+    public Delete(MongoDatabase mongoDatabase) {
+        this.mongoDatabase = mongoDatabase;
+    }
 
     // TODO: Consider refactoring these methods into a single method that takes an enum as a parameter
 
@@ -14,7 +20,7 @@ public class Delete extends Connection {
      */
     public boolean deleteProject(int pid) {
         try {
-            database.getCollection("Project").deleteOne(new org.bson.Document("_id", pid));
+            mongoDatabase.getCollection("Project").deleteOne(new org.bson.Document("_id", pid));
             System.out.println("Project deleted successfully");
             return true;
         } catch (Exception e) {
@@ -31,7 +37,7 @@ public class Delete extends Connection {
      */
     public boolean deleteSupplier(ObjectId _id) {
         try {
-            database.getCollection("Supplier").deleteOne(new org.bson.Document("_id", _id));
+            mongoDatabase.getCollection("Supplier").deleteOne(new org.bson.Document("_id", _id));
             System.out.println("Supplier deleted successfully");
             return true;
         } catch (Exception e) {

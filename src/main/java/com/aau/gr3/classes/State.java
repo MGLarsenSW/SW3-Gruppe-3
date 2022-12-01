@@ -16,7 +16,6 @@ public class State{
         this.qa = false;
         this.reminder = false;
         this.contract = false;
-        this.percentage = 0;
     }
 
     public boolean isRfi() {
@@ -71,7 +70,8 @@ public class State{
         return percentage;
     }
 
-    public void setPercentage() {
+    // TODO: Refactor this method to be more prettier?
+    public void calculatePercentage() {
         int percentage = 0;
 
         if (this.rfi) {
