@@ -4,6 +4,7 @@ package com.aau.gr3.classes;
 public class Scoring {
     private int guarantee;
     private boolean csr;
+    private String tc;
     private String siteErection;
     private int price; // 32-bit limitation???
     private boolean board;
@@ -13,6 +14,7 @@ public class Scoring {
     public Scoring() {
         this.guarantee = 0;
         this.csr = false;
+        this.tc = "";
         this.siteErection = "";
         this.price = 0;
         this.board = false;
@@ -34,6 +36,14 @@ public class Scoring {
 
     public void setCsr(boolean csr) {
         this.csr = csr;
+    }
+
+    public String getTc() {
+        return tc;
+    }
+
+    public void setTc(String tc) {
+        this.tc = tc;
     }
 
     public String getSiteErection() {

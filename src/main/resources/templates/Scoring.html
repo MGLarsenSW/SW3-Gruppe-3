@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns:overflow-x="http://www.w3.org/1999/xhtml"
+      xmlns:white-space="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="fragments :: meta"></th:block>
     <title>Scoring</title>
 </head>
 <body>
+<style>
+    .table_wrapper{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+</style>
 <div th:insert="fragments :: headerProject"></div>
-<table class="table table-striped">
+<div class="px-5" id="view">
+<div class="table_wrapper">
+<table class="table table-striped table-bordered table-sm table-responsive">
     <thead>
         <tr>
             <th scope="col">Supplier</th>
@@ -23,17 +34,19 @@
     <tbody>
     <tr th:each="supplier : ${supplyList}">
        <th scope="row" th:text="${supplier.supplierName}">Supplier</th>
-       <td>Guarantee(year(s))</td>
-       <td>CSR(boolean checkmark to be made)</td>
-       <td>Legal T&C's</td>
-       <td>Site erection</td>
-       <td>Price</td>
-       <td>Board & Lodging(boolean checkmark to be made)</td>
-       <td>Travel Costs (boolean checkmark to be made)</td>
-       <td>Score</td>
+       <td th:text="${supplier.scoring.guarantee}">Guarantee(year(s))</td>
+       <td th:text="${supplier.scoring.csr}">CSR</td>
+       <td th:text="${supplier.scoring.tc}">Legal T&C's</td>
+       <td th:text="${supplier.scoring.siteErection}">Site erection</td>
+       <td th:text="${supplier.scoring.price}">Price</td>
+       <td th:text="${supplier.scoring.board}">Board & Lodging</td>
+       <td th:text="${supplier.scoring.travel}">Travel Costs</td>
+       <td th:text="${supplier.scoring.score}">Score</td>
     </tr>
     </tbody>
 </table>
+</div>
+</div>
 <div th:insert="fragments :: footer"></div>
 </body>
 </html>
