@@ -32,17 +32,19 @@
         </tr>
     </thead>
     <tbody>
+    <form>
     <tr th:each="supplier : ${supplyList}">
        <th scope="row" th:text="${supplier.supplierName}">Supplier</th>
-       <td th:text="${supplier.scoring.guarantee}">Guarantee(year(s))</td>
-       <td th:text="${supplier.scoring.csr}">CSR</td>
-       <td th:text="${supplier.scoring.tc}">Legal T&C's</td>
-       <td th:text="${supplier.scoring.siteErection}">Site erection</td>
-       <td th:text="${supplier.scoring.price}">Price</td>
-       <td th:text="${supplier.scoring.board}">Board & Lodging</td>
-       <td th:text="${supplier.scoring.travel}">Travel Costs</td>
-       <td th:text="${supplier.scoring.score}">Score</td>
+       <td th:text="${supplier.scoring.guarantee}" contenteditable='true'>Guarantee(year(s))</td>
+       <td th:text="${supplier.scoring.csr}" contenteditable='true'>CSR</td>
+       <td th:text="${supplier.scoring.tc}" contenteditable='true'>Legal T&C's</td>
+       <td th:text="${supplier.scoring.siteErection}" contenteditable='true'>Site erection</td>
+       <td th:text="${supplier.scoring.price}" contenteditable='true'>Price</td>
+       <td th:text="${supplier.scoring.board}" contenteditable='true'>Board & Lodging</td>
+       <td th:text="${supplier.scoring.travel}" contenteditable='true'>Travel Costs</td>
+       <td><input type="number" id="quantity" name="quantity" min="0" max="100" th:value="${supplier.scoring.score}">  </td>
     </tr>
+    </form>
     </tbody>
 </table>
 </div>
