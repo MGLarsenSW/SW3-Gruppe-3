@@ -1,10 +1,14 @@
 package com.aau.gr3.controllers;
 
 import com.aau.gr3.classes.Project;
+import com.aau.gr3.classes.Scoring;
+import com.aau.gr3.classes.State;
 import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.crud.Create;
+import com.aau.gr3.crud.Delete;
 import com.aau.gr3.crud.Read;
 import com.aau.gr3.util.Connection;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +26,7 @@ public class ProjectController {
         return "ProjectOverview";
     }
     @RequestMapping(value = "/ProjectOverview", method = RequestMethod.POST)
-    public String CreateProject(@ModelAttribute(name="project") Project project, Model model){
+    String CreateProject(@ModelAttribute(name="project") Project project, Model model){
         Create create = new Create(Connection.getInstance());
         create.insertProject(project);
         return getProjects(model);
@@ -44,11 +48,23 @@ public class ProjectController {
         model.addAttribute("supplyListNoDup", noDuplicates);
         model.addAttribute("supplierList", read.getSupplierList(id));
         model.addAttribute("project", read.getProject(id));
+        model.addAttribute("nextObjId", new ObjectId());
+        read.printSupplierList(supplierList);
         return "ProjectPage";
     }
     @RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
-    public String CreateSupplier(@ModelAttribute(name="supplier") {
-
+    String CreateSupplier(@PathVariable("id") int id, @ModelAttribute(name="supplier") Supplier supplier, Model model) {
+        Create create = new Create(Connection.getInstance());
+        supplier.setScoring(new Scoring());
+        supplier.setState(new State());
+        create.insertSupplier(supplier);
+        return getProject(id, model);
+    }
+    @GetMapping(value = "/Project/{pid}/remove/{id}")
+    String DeleteSupplier(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, Model model) {
+        Delete delete = new Delete(Connection.getInstance());
+        delete.deleteSupplier(id);
+        return getProject(pid, model);
     }
 }
 
