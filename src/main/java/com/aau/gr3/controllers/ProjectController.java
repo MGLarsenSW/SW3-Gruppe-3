@@ -30,11 +30,9 @@ public class ProjectController {
 
     @GetMapping("/ProjectOverview/Archived")
     String getProjectsArchived(Model model) {
-        Read read = new Read();
-        read.establish();
+        Read read = new Read(Connection.getInstance());
         model.addAttribute("Projects", read.getOverview());
         model.addAttribute("NextID", read.getNextID());
-        read.close();
         return "ProjectOverviewArchived";
     }
 
@@ -48,7 +46,9 @@ public class ProjectController {
         model.addAttribute("project", read.getProject(id));
         return "ProjectPage";
     }
-    /*@RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
-    public String CreateSupplier(@ModelAttribute(name="supplier")*/
+    @RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
+    public String CreateSupplier(@ModelAttribute(name="supplier") {
+
+    }
 }
 
