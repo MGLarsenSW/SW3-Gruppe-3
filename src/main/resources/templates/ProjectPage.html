@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <!-- Modal Reminder -->
-                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -102,8 +102,9 @@
                                         <div class="modal-body">
                                         <!--reminder-->
 <!--                                            <th:formaction th:each="reminder : ${reminderEmail}">-->
-                                                <textarea class="form-control" th:text="${reminder}" rows="20"></textarea>
-<!--                                            </th:formaction>-->
+                                                <textarea class="form-control" th:text="${supplier.supplierName}" rows="20"></textarea>
+<!--                                            <works with supplier now, needs to work with reminder/th:formaction>-->
+<!--                                            -->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,16 +113,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                                $(function(){
-                                    $('#reminderModal').on('show.bs.modal', function (event) {
-                                        var button = $(event.relatedTarget);
-                                        var recipient = button.data('whatever');
-                                        var modal = $(this);
-                                        modal.find('.modal-body input').val(recipient);
-                                    });
-                                });
-                            </script>
                             <!-- Modal Quotation -->
                             <div class="modal fade" th:attr="id='quotationModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="quotationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

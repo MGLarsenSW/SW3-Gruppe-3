@@ -49,7 +49,7 @@ public class ProjectController {
         List <Supplier> supplierList = read.getSupplierList(id);
         Email email = new Email(supplierList);
         model.addAttribute("supplierList", read.getSupplierList(id));
-        model.addAttribute("qaEmail", Constants.QAEmailTemplate);
+//        model.addAttribute("qaEmail", Constants.QAEmailTemplate);
 //        model.addAttribute("reminderEmail", email.getReminderEmail());
 //        model.addAttribute("email", email.getEmailList());
         model.addAttribute("reminderEmail", email.getReminderEmailList());
