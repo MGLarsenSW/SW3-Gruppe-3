@@ -40,14 +40,14 @@
                             </div>
                             <div class="row justify-content-between">
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" data-target="#tenderModal" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" data-target="#qaModal" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" data-target="#reminderModal" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" data-target="#quotationModal" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" th:attr="data-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#quotationModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                             <!-- Modal Tender -->
-                            <div class="modal fade" id="tenderModal" tabindex="-1" role="dialog" aria-labelledby="tenderModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:attr="id='tenderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="tenderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <!-- Modal Q&A -->
-                            <div class="modal fade" id="qaModal" tabindex="-1" role="dialog" aria-labelledby="qaModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:attr="id='qaModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="qaModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <!-- Modal Reminder -->
-                            <div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -100,7 +100,10 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            reminder
+                                        <!--reminder-->
+<!--                                            <th:formaction th:each="reminder : ${reminderEmail}">-->
+                                                <textarea class="form-control" th:text="${reminder}" rows="20"></textarea>
+<!--                                            </th:formaction>-->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -109,8 +112,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                $(function(){
+                                    $('#reminderModal').on('show.bs.modal', function (event) {
+                                        var button = $(event.relatedTarget);
+                                        var recipient = button.data('whatever');
+                                        var modal = $(this);
+                                        modal.find('.modal-body input').val(recipient);
+                                    });
+                                });
+                            </script>
                             <!-- Modal Quotation -->
-                            <div class="modal fade" id="quotationModal" tabindex="-1" role="dialog" aria-labelledby="quotationModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:attr="id='quotationModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="quotationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
