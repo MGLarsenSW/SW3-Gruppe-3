@@ -34,7 +34,7 @@ public class Connection {
         // Create a connection to the database if it doesn't exist
         try {
             // Read the ProviderName file for database credentials
-            String directory = "src/main/resources/ProviderName2";
+            String directory = "src/main/resources/ProviderName";
             BufferedReader br = new BufferedReader(new FileReader(directory));
             String URI = br.readLine();
             br.close();
