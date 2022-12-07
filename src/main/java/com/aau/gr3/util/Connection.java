@@ -19,33 +19,34 @@ public class Connection {
 
     private Connection() {
 
-    } // Keep this private so that it can't be instantiated
+    } // Keep this private so that it can't be instantiated outside this class
 
     /**
      * Establishes a connection to the database with a singleton pattern
      */
-    public static void establish(){
-        String directory = "src/main/resources/ProviderName";
+    public static void establish() {
+        // Exit if the connection has already been established
+        if (mongoClient != null){
+            System.out.println("Connection already established");
+            return;
+        }
 
         // Create a connection to the database if it doesn't exist
-        if (mongoClient == null){
-            try {
-                // Read the ProviderName file for database credentials
-                BufferedReader br = new BufferedReader(new FileReader(directory));
-                String URI = br.readLine();
-                br.close();
+        try {
+            // Read the ProviderName file for database credentials
+            String directory = "src/main/resources/ProviderName2";
+            BufferedReader br = new BufferedReader(new FileReader(directory));
+            String URI = br.readLine();
+            br.close();
 
-                CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-                CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+            CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+            CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
-                mongoClient = new MongoClient(new MongoClientURI(URI));
-                database = mongoClient.getDatabase("graintec").withCodecRegistry(pojoCodecRegistry);
-                System.out.println("Connection established");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Connection already established");
+            mongoClient = new MongoClient(new MongoClientURI(URI));
+            database = mongoClient.getDatabase("graintec").withCodecRegistry(pojoCodecRegistry);
+            System.out.println("Connection established");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -53,6 +54,11 @@ public class Connection {
      * Close the connection to the database
      */
     public static void close(){
+        if (mongoClient == null){
+            System.out.println("Connection already closed");
+            return;
+        }
+
         try {
             mongoClient.close();
             System.out.println("Connection closed");
