@@ -5,11 +5,10 @@ import com.aau.gr3.classes.State;
 import com.mongodb.client.MongoDatabase;
 import org.bson.types.ObjectId;
 
-public class Update {
-    private MongoDatabase mongoDatabase;
+public class Update extends Crud {
 
     public Update(MongoDatabase mongoDatabase) {
-        this.mongoDatabase = mongoDatabase;
+        super(mongoDatabase);
     }
 
     // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter

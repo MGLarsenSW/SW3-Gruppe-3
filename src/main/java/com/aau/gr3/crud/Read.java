@@ -12,12 +12,9 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
-public class Read {
-
-    private MongoDatabase mongoDatabase;
-
+public class Read extends Crud {
     public Read(MongoDatabase mongoDatabase) {
-        this.mongoDatabase = mongoDatabase;
+        super(mongoDatabase);
     }
 
     /**

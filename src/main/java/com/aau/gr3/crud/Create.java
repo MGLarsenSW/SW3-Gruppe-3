@@ -4,17 +4,14 @@ import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Supplier;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.types.ObjectId;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Create {
-
-    private MongoDatabase mongoDatabase;
+public class Create extends Crud {
 
     public Create(MongoDatabase mongoDatabase) {
-        this.mongoDatabase = mongoDatabase;
+        super(mongoDatabase);
     }
 
     // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter

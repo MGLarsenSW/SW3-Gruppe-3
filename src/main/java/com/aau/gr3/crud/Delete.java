@@ -3,12 +3,10 @@ package com.aau.gr3.crud;
 import com.mongodb.client.MongoDatabase;
 import org.bson.types.ObjectId;
 
-public class Delete {
-
-    private MongoDatabase mongoDatabase;
+public class Delete extends Crud {
 
     public Delete(MongoDatabase mongoDatabase) {
-        this.mongoDatabase = mongoDatabase;
+        super(mongoDatabase);
     }
 
     // TODO: Consider refactoring these methods into a single method that takes an enum as a parameter
