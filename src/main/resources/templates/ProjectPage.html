@@ -57,7 +57,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &#13;&#10;&#13;&#10;Hereby the tender package for the ${supplier.supply} project as informed. &#13;&#10;&#13;&#10;Please go through the documents, and prepare for individual Q&A session on {Q&A date} &#13;&#10;&#13;&#10;Feel free to forward questions prior to above meeting. &#13;&#10;&#13;&#10;Technical: Hans Hansen – xxx@graintec.com &#13;&#10;Technical: Jens Jensen – xxx@graintec.com &#13;&#10;Commercial: {sourcing manager} – xxx@graintec.com &#13;&#10;&#13;&#10;The Deadline for the quotation is {quotation date} &#13;&#10;&#13;&#10;Kind regards, &#13;&#10;{sourcing manager}|" rows="20"></textarea>
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby the tender package for the ${supplier.supply} project as informed. &NewLine;&NewLine;Please go through the documents, and prepare for individual Q&A session on {Q&A date} &NewLine;&NewLine;Feel free to forward questions prior to above meeting. &NewLine;&NewLine;Technical: Hans Hansen – xxx@graintec.com &NewLine;Technical: Jens Jensen – xxx@graintec.com &NewLine;Commercial: {sourcing manager} – xxx@graintec.com &NewLine;&NewLine;The Deadline for the quotation is {quotation date} &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -77,7 +77,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &#13;&#10;&#13;&#10;Hereby an invite for a Q&A session in regards to the forwarded tender material. &#13;&#10;&#13;&#10;Kind regards, &#13;&#10;{sourcing manager}|" rows="20"></textarea>
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby an invite for a Q&A session in regards to the forwarded tender material. &NewLine;&NewLine;Kind regards, &NewLine;&NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -103,7 +103,7 @@
 <!--                                                <textarea class="form-control" th:text="${supplier.supplierName}" rows="20"></textarea>-->
 <!--                                                <textarea class="form-control" th:text="${reminder}" rows="20"></textarea>-->
 <!--                                            </th:formaction>-->
-                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &#13;&#10;&#13;&#10;A kind reminder that today is the deadline for the ${supplier.supply} package. &#13;&#10;&#13;&#10;Kind regards, &#13;&#10;{sourcing manager}|" rows="20"></textarea>
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;A kind reminder that today is the deadline for the ${supplier.supply} package. &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
 
                                         </div>
                                         <div class="modal-footer">
