@@ -20,16 +20,6 @@ public class Email {
 //        return emailList;
 //    }
 
-//    public  String getQAEmail() {
-//        return Constants.QAEmailTemplate;
-//    }
-
-//    public String getReminderEmail(Supplier supplier) {
-//        return "Dear " + "{Supplier contact}" + ",\n" +
-//                "A kind reminder that today is the deadline for the " + supplier.getSupply() + " package.\n" +
-//                "Kind regards,\n" +
-//                "{sourcing manager}";
-//    }
     public List<String> getReminderEmailList() {
         List<String> emailList = new ArrayList<>();
         for (Supplier supplier : supplierList) {
@@ -41,11 +31,11 @@ public class Email {
         return emailList;
     }
 
-    public String getDeadlineEmail(Supplier supplier) {
-        return "Dear {supplier contact person},\n" +
-                "A kind reminder that today is the deadline for the " + supplier.getSupply() + " package.\n" +
-                "Looking forward to receiving your quotation.\n" +
-                "Kind regards\n" +
-                "{sourcing manager}";
-    }
+//    public String getDeadlineEmail(Supplier supplier) {
+//        return "Dear {supplier contact person},\n" +
+//                "A kind reminder that today is the deadline for the " + supplier.getSupply() + " package.\n" +
+//                "Looking forward to receiving your quotation.\n" +
+//                "Kind regards\n" +
+//                "{sourcing manager}";
+//    }
 }

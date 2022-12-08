@@ -1,6 +1,5 @@
 package com.aau.gr3.controllers;
 
-import com.aau.gr3.Constants;
 import com.aau.gr3.classes.Email;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Supplier;
@@ -46,15 +45,11 @@ public class ProjectController {
     String getProject(@PathVariable("id") int id, Model model) {
         Read read = new Read();
         read.establish();
-        List <Supplier> supplierList = read.getSupplierList(id);
+        List<Supplier> supplierList = read.getSupplierList(id);
         Email email = new Email(supplierList);
         model.addAttribute("supplierList", read.getSupplierList(id));
-//        model.addAttribute("qaEmail", Constants.QAEmailTemplate);
-//        model.addAttribute("reminderEmail", email.getReminderEmail());
-//        model.addAttribute("email", email.getEmailList());
         model.addAttribute("reminderEmail", email.getReminderEmailList());
         System.out.println(email.getReminderEmailList());
-//        model.addAttribute("reminderEmail", constants);
         read.close();
         return "ProjectPage";
     }
