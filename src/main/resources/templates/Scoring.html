@@ -38,7 +38,9 @@
        <td>
            <input type="number" th:value="${supplier.scoring.guarantee}">
        </td>
-       <td th:text="${supplier.scoring.csr}" contenteditable='true'>CSR</td>
+       <td>
+           <input name="boolean-parameter" type="checkbox" th:value="${supplier.scoring.csr}"/>
+       </td>
        <td>
            <input type="text" th:text="${supplier.scoring.tc}">
        </td>
@@ -48,14 +50,12 @@
        <td>
            <input type="number" th:value="${supplier.scoring.price}">
        </td>
-       <td th:text="${supplier.scoring.board}">
-           Board & Lodging
+       <td>
+           <input name="boolean-parameter" type="checkbox" th:value="${supplier.scoring.board}"/>
        </td>
-
-       <td th:text="${supplier.scoring.travel}">
-           Travel Costs
+       <td>
+           <input name="boolean-parameter" type="checkbox" th:value="${supplier.scoring.}"/>
        </td>
-        
        <td>
            <input type="number" id="quantity" name="quantity" min="0" max="100" th:value="${supplier.scoring.score}">
        </td>
