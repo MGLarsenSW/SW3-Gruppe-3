@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <th:block th:replace="meta :: meta"></th:block>
+    <th:block th:replace="fragments :: meta"></th:block>
     <title>Project Overview</title>
 </head>
 <body>
-    <div th:insert="header :: header"></div>
-    <div class="px-5" id="view">
+    <div th:insert="fragments :: header"></div>
+        <div class="px-5" id="view">
         <h1 class="display-1 mb-5">Project overview</h1>
         <div class="d-flex justify-content-center">
             <a class="btn btn-outline-primary bi bi-archive-fill" href="ProjectOverview/Archived" role="button"> Archived</a>
         </div>
         <div class="container-fluid" id="cardContainer">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mb-5">
                 <div class="shadow-lg p-0 card m-4" style="height: 26rem; width: 22rem;">
                     <div class="card-body">
                         <h5 class="card-title"></h5>
-                        <button type="button" class="btn btn-lg btn-primary rounded-pill position-absolute top-50 start-50 translate-middle bi bi-plus-lg h1" data-toggle="modal" data-target="#exampleModal"> New project</button>
+                        <button type="button" class="btn btn-lg btn-primary rounded-pill position-absolute top-50 start-50 translate-middle bi bi-plus-lg h1" data-bs-toggle="modal" data-bs-target="#exampleModal"> New project</button>
                         <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <form action="#" th:action="@{/ProjectOverview}" th:object="${Project}" method="post">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Create a new project</h5>
-                                            <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-row">
@@ -55,7 +55,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Create project</button>
                                             </div>
                                         </div>
@@ -81,6 +81,6 @@
             </div>
         </div>
     </div>
-    <div th:insert="footer :: footer"></div>
+    <div th:insert="fragments :: footer"></div>
 </body>
 </html>

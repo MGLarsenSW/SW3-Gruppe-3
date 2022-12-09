@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <th:block th:replace="meta :: meta"></th:block>
+    <th:block th:replace="fragments :: meta"></th:block>
     <title>Project</title>
 </head>
 <body>
-    <div th:insert="header :: header"></div>
+    <div th:insert="fragments :: headerProject"></div>
     <!--<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
         <button type="button" class="btn btn-dark">Button</button>
         <button type="button" class="btn btn-dark">Button</button>
@@ -23,15 +23,59 @@
                     <th class="bi bi-buildings-fill" scope="col"> Supplier</th>
                     <th class="bi bi-person-vcard-fill" scope="col"> Contact person</th>
                     <th class="text-center bi bi-list-check" scope="col"> Status</th>
-                </tr>
+                    <th class="text-center bi bi-person-x-fill" scope="col" style="width: 15%"> Delete</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <button type="button" class="btn btn-lg btn-primary rounded-pill bi bi-plus-lg h1" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Supplier</button>
+                    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <form action="#" th:action="@{/Project/{pid}(pid = ${project.id})}" th:object="${Supplier}" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add a new supplier</h5>
+                                        <button type="button" class="btn btn-lg close bi bi-x-circle-fill" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-row">
+                                            <div class="col-md-4 mb-3">
+                                                <input type="hidden" field="*{id}" name="id" th:value="${nextObjId}">
+                                                <input type="hidden" field="*{pid}" name="pid" th:value="${project.id}">
+                                                <label for="supplyLabel">Supply</label>
+                                                <input class="form-control" list="previousSupply" id="supplyLabel" field="*{supply}" name="supply" autocomplete="off" required>
+                                                <datalist id="previousSupply">
+                                                    <option th:each="supply : ${supplyListNoDup}" th:value="${supply}">
+                                                </datalist>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="supplierLabel">Supplier</label>
+                                                <input type="text" class="form-control" id="supplierLabel" field="*{supplierName}" name="supplierName" autocomplete="off" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactPersonLabel">Contact person</label>
+                                                <input type="text" class="form-control" id="contactPersonLabel" field="*{contactPerson}" name="contactPerson" autocomplete="off" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactMailLabel">Contact mail</label>
+                                                <input type="email" class="form-control" id="contactMailLabel" field="*{contactMail}" name="contactMail" autocomplete="off" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button id="createbutton" type="submit" value="Submit" class="btn btn-primary">Add supplier</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
                 <tr th:each="supplier : ${supplierList}" >
                     <th scope="row" th:text="${supplier.supply}" />
                     <td th:text="${supplier.supplierName}" />
                     <td>
-                        <a href="#" th:text="${supplier.contactPerson}" data-toggle="tooltip" data-placement="top" title data-original-title="${supplier.contactMail}" />
+                        <a href="#" th:text="${supplier.contactPerson}" th:title="${supplier.contactMail}"/>
                     </td>
                     <td style="width: 50%; padding-top: 3rem">
                         <div style="width: 100%">
@@ -40,18 +84,38 @@
                             </div>
                             <div class="row justify-content-between">
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Scoring</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                         </div>
+                    </td>
+                    <td>
+                        <form th:action="@{/Project/{pid}/remove/{id}(pid = ${project.id}, (id = ${supplier.id}))}">
+                            <button type="button" class="btn btn-primary rounded-pill bi bi-dash position-relative top-50 start-50 translate-middle mt-4" style="background-color: firebrick; border-color: firebrick" data-bs-toggle="modal" th:attr="data-bs-target='#deleteModal'+${supplier.id}">
+                                Delete
+                            </button>
+                            <div class="modal fade modal-sm" th:attr="id='deleteModal'+${supplier.id}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5 position-relative top-50 start-50 translate-middle mt-4"> Are You Sure?</h1>
+                                        </div>
+                                        <div class="modal-body position-relative top-50 start-50 translate-right">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                                            <button type="submit" th:attr="href='/Project/' + ${project.id} + '/remove/' + ${supplier.id}" class="btn btn-outline-secondary">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div th:insert="footer :: footer"></div>
+    <div th:insert="fragments :: footer"></div>
 </body>
 </html>

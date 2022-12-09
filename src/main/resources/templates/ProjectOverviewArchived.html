@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <th:block th:replace="meta :: meta"></th:block>
+    <th:block th:replace="fragments :: meta"></th:block>
     <title>Project Overview Archived</title>
 </head>
 <body>
-<div th:insert="header :: header"></div>
+<div th:insert="fragments :: header"></div>
 <div class="px-5" id="view">
     <h1 class="display-1 mb-5">Project overview</h1>
     <div class="d-flex justify-content-center">
@@ -33,6 +33,6 @@
         </div>
     </div>
 </div>
-<div th:insert="footer :: footer"></div>
+<div th:insert="fragments :: footer"></div>
 </body>
 </html>
