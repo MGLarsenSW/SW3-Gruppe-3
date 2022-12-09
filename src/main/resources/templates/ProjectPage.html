@@ -84,19 +84,19 @@
                             </div>
                             <div class="row justify-content-between">
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" th:attr="data-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" th:attr="data-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" th:attr="data-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.quotation ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-toggle="modal" th:attr="data-target='#quotationModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Quotation</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#scoringModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Scoring</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
                             </div>
                             <!-- Modal Tender -->
-                            <div class="modal fade" th:attr="id='tenderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="tenderModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='tenderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="tenderModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="tenderModalLabel">Tender</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -104,8 +104,8 @@
                                             <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby the tender package for the ${supplier.supply} project as informed. &NewLine;&NewLine;Please go through the documents, and prepare for individual Q&A session on {Q&A date} &NewLine;&NewLine;Feel free to forward questions prior to above meeting. &NewLine;&NewLine;Technical: Hans Hansen – xxx@graintec.com &NewLine;Technical: Jens Jensen – xxx@graintec.com &NewLine;Commercial: {sourcing manager} – xxx@graintec.com &NewLine;&NewLine;The Deadline for the quotation is {quotation date} &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Send Mail</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="qaModalLabel">Q&A</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -124,20 +124,20 @@
                                             <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby an invite for a Q&A session in regards to the forwarded tender material. &NewLine;&NewLine;Kind regards, &NewLine;&NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Send Mail</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Modal Reminder -->
-<!--                            <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">-->
-                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
+                            <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
+<!--                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">-->
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="reminderModalLabel">Reminder</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -151,29 +151,28 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Send Mail</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal Quotation -->
-                            <div class="modal fade" th:attr="id='quotationModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="quotationModalLabel" aria-hidden="true">
+                            <!-- Modal Scoring -->
+                            <div class="modal fade" th:attr="id='scoringModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="scoringModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="quotationModalLabel">Quotation</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <h5 class="modal-title" id="scoringModalLabel">Scoring</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Send Mail</button>
-                                        </div>
+                                        <form action="#" class="form" method="put">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" value="${supplier.state.setScoring(true)}">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" value="${supplier.state.setScoring(false)}">Incomplete</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
