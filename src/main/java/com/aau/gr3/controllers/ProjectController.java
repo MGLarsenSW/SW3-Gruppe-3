@@ -1,5 +1,6 @@
 package com.aau.gr3.controllers;
 
+import com.aau.gr3.classes.Email;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Scoring;
 import com.aau.gr3.classes.State;
@@ -49,7 +50,6 @@ public class ProjectController {
         model.addAttribute("supplierList", read.getSupplierList(id));
         model.addAttribute("project", read.getProject(id));
         model.addAttribute("nextObjId", new ObjectId());
-        read.printSupplierList(supplierList);
         return "ProjectPage";
     }
     @RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
@@ -67,4 +67,3 @@ public class ProjectController {
         return getProject(pid, model);
     }
 }
-
