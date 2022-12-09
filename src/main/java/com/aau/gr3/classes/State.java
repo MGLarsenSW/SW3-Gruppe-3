@@ -2,21 +2,20 @@ package com.aau.gr3.classes;
 
 public class State{
     private boolean rfi;
+    private boolean scoring;
     private boolean tender;
     private boolean qa;
     private boolean reminder;
-    private boolean quotation;
     private boolean contract;
     private int percentage;
 
     public State() {
         this.rfi = false;
+        this.scoring = false;
         this.tender = false;
         this.qa = false;
         this.reminder = false;
-        this.quotation = false;
         this.contract = false;
-        this.percentage = 0;
     }
 
     public boolean isRfi() {
@@ -51,12 +50,12 @@ public class State{
         this.reminder = reminder;
     }
 
-    public boolean isQuotation() {
-        return quotation;
+    public boolean isScoring() {
+        return scoring;
     }
 
-    public void setQuotation(boolean quotation) {
-        this.quotation = quotation;
+    public void setScoring(boolean scoring) {
+        this.scoring = scoring;
     }
 
     public boolean isContract() {
@@ -71,7 +70,8 @@ public class State{
         return percentage;
     }
 
-    public void setPercentage() {
+    // TODO: Refactor this method to be more prettier?
+    public void calculatePercentage() {
         int percentage = 0;
 
         if (this.rfi) {
@@ -86,7 +86,7 @@ public class State{
         if (this.reminder) {
             percentage += 20;
         }
-        if (this.quotation) {
+        if (this.scoring) {
             percentage += 20;
         }
         this.percentage = percentage;

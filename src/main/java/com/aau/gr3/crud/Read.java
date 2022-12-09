@@ -1,17 +1,21 @@
 package com.aau.gr3.crud;
 
 import com.aau.gr3.classes.*;
-import com.aau.gr3.util.Connection;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
-public class Read extends Connection{
+public class Read extends Crud {
+    public Read(MongoDatabase mongoDatabase) {
+        super(mongoDatabase);
+    }
 
     /**
      * Gets a list of all projects in the database
@@ -19,7 +23,7 @@ public class Read extends Connection{
      */
     public List<Project> getOverview() {
         try {
-            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            MongoCollection<Project> projectCollection = mongoDatabase.getCollection("Project", Project.class);
             List<Project> overviewList = new ArrayList<>();
 
             // Include only used fields for the overview
@@ -52,7 +56,7 @@ public class Read extends Connection{
      */
     public Project getProject(int pid){
         try {
-            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            MongoCollection<Project> projectCollection = mongoDatabase.getCollection("Project", Project.class);
 
             // Find the project with the specific id
             Project project = projectCollection.find(eq("_id", pid)).first();
@@ -81,15 +85,16 @@ public class Read extends Connection{
      */
     public List<Supplier> getSupplierList(int pid){
         try {
-            MongoCollection<Supplier> supplierCollection = database.getCollection("Supplier", Supplier.class);
+            MongoCollection<Supplier> supplierCollection = mongoDatabase.getCollection("Supplier", Supplier.class);
             List<Supplier> supplierList = new ArrayList<>();
 
             // Find all suppliers with the specific project id
             supplierCollection.find(eq("pid", pid)).into(supplierList);
 
-            for (Supplier supplier : supplierList){
-                supplier.getState().setPercentage();
+            for (Supplier supplier : supplierList) {
+                supplier.getState().calculatePercentage();
             }
+
 
             return supplierList;
         } catch (Exception e) {
@@ -98,6 +103,35 @@ public class Read extends Connection{
         System.out.println("No supplier found");
         return null;
     }
+
+    /**
+     * Gets a list of supply items from a specific supplier in the database
+     * @param pid - Project ID
+     * @param supply - Supply as a string
+     * @return - Returns a list of Supply objects. Return null if there is no supply item(s)
+     */
+    public List<Supplier> getSupplyList(int pid, String supply){
+        try {
+            MongoCollection<Supplier> supplierCollection = mongoDatabase.getCollection("Supplier", Supplier.class);
+            List<Supplier> supplyList = new ArrayList<>();
+
+            Bson filter = Projections.fields(
+                    Projections.exclude("State")
+            );
+
+            // Find all suppliers with the specific project id and supply
+            Bson andComparison = and(eq("pid", pid), eq("supply", supply));
+
+            supplierCollection.find(andComparison).projection(filter).into(supplyList);
+
+            return supplyList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("No supply found");
+        return null;
+    }
+
     // TODO : Only for testing currently
     public void printSupplierList(List<Supplier> list){
         for (Supplier supplier : list){
@@ -111,10 +145,10 @@ public class Read extends Connection{
             if (supplier.getState() != null){
                 System.out.println("State: " + supplier.getState());
                 System.out.println(" -> QA: " + supplier.getState().isQa());
-                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
                 System.out.println(" -> Contract: " + supplier.getState().isContract());
                 System.out.println(" -> RFI: " + supplier.getState().isRfi());
-                System.out.println(" -> Quotation: " + supplier.getState().isQuotation());
+                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
             }
 
             if (supplier.getScoring() != null) {
@@ -131,7 +165,7 @@ public class Read extends Connection{
      */
     public int getNextID(){
         try{
-            MongoCollection<Project> projectCollection = database.getCollection("Project", Project.class);
+            MongoCollection<Project> projectCollection = mongoDatabase.getCollection("Project", Project.class);
 
             // Include only the project id field
             Bson filter = Projections.fields(
