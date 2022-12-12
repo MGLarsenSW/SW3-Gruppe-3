@@ -167,10 +167,10 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="#" class="form" method="put">
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${updateSupplier}" th:method="PUT">
                                             <div class="modal-body d-flex justify-content-center">
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" value="${supplier.state.setScoring(true)}">Complete</button>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" value="${supplier.state.setScoring(false)}">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{getState().scoring}" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{getState().scoring}" th:value="false">Incomplete</button>
                                             </div>
                                         </form>
                                     </div>

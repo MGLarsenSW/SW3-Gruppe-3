@@ -8,12 +8,14 @@ import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.crud.Create;
 import com.aau.gr3.crud.Delete;
 import com.aau.gr3.crud.Read;
+import com.aau.gr3.crud.Update;
 import com.aau.gr3.util.Connection;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,5 +67,10 @@ public class ProjectController {
         Delete delete = new Delete(Connection.getInstance());
         delete.deleteSupplier(id);
         return getProject(pid, model);
+    }
+    @PutMapping(value = "/Project/{pid}/update/{id}")
+    String UpdateState(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, @ModelAttribute(name="supplier") Supplier supplier, Model model) {
+
+        return "redirect:/Project/" + pid;
     }
 }
