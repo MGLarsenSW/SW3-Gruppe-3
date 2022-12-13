@@ -204,6 +204,9 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <div class="modal-body" >
+                                            <textarea class="form-control" th:text="|The score for ${supplier.supply} is set to ${supplier.scoring.score}|" readonly rows="5"></textarea>
+                                        </div>
                                         <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
                                             <div class="modal-body d-flex justify-content-center">
                                                 <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
