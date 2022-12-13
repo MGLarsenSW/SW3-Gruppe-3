@@ -9,12 +9,21 @@
     <div class="px-5" id="view">
         <h1 class="display-1 mb-5">Supplier overview</h1>
         <table class="table align-middle">
-            <thead>
+            <thead style="position: sticky; top: 0; background-color: #cccccc; z-index: 1">
                 <tr>
                     <th class="bi bi-box-seam-fill" scope="col"> Supply</th>
                     <th class="bi bi-buildings-fill" scope="col"> Supplier</th>
                     <th class="bi bi-person-vcard-fill" scope="col"> Contact person</th>
-                    <th class="text-center bi bi-list-check" scope="col"> Status</th>
+                    <th scope="col">
+                        <div class="row justify-content-between">
+                            <div class="col-1">RFI</div>
+                            <div class="col-1">Scoring</div>
+                            <div class="col-1">Tender</div>
+                            <div class="col-1">Q&A</div>
+                            <div class="col-1">Reminder</div>
+                            <div class="col-1">Contract</div>
+                        </div>
+                    </th>
                     <th class="text-center bi bi-person-x-fill" scope="col" style="width: 15%"> Delete</th>
                 </tr>
             </thead>
@@ -75,12 +84,12 @@
                                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" th:style="|width:${supplier.state.percentage}%|"></div>
                             </div>
                             <div class="row justify-content-between">
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small" data-bs-toggle="modal" th:attr="data-bs-target='#rfiModal'+${supplier.id}">RFI</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#scoringModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Scoring</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small" data-bs-toggle="modal" th:attr="data-bs-target='#contractModal'+${supplier.id}">Contract</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#rfiModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#scoringModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#contractModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: xx-large"></button>
                             </div>
                             <!-- Modal RFI -->
                             <div class="modal fade" th:attr="id='rfiModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="rfiModalLabel" aria-hidden="true">
