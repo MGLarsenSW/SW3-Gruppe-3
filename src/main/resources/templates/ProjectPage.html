@@ -99,7 +99,8 @@
                                                 <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
                                                 <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
                                                 <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{rfi}" name="rfi" th:value="false">Incomplete</button>
+                                                <button type="submit" th:if="${supplier.state.rfi} and ${supplier.state.scoring}" class="btn btn-lg btn-danger mx-3 disabled" field="*{rfi}" name="rfi" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{rfi}" name="rfi" th:if="${supplier.state.scoring == false}" th:value="false">Incomplete</button>
                                                 <button type="submit" class="btn btn-lg btn-success mx-3" field="*{rfi}" name="rfi" th:value="true">Complete</button>
                                             </div>
                                         </form>
@@ -117,7 +118,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby the tender package for the ${supplier.supply} project as informed. &NewLine;&NewLine;Please go through the documents, and prepare for individual Q&A session on {Q&A date} &NewLine;&NewLine;Feel free to forward questions prior to above meeting. &NewLine;&NewLine;Technical: Hans Hansen – xxx@graintec.com &NewLine;Technical: Jens Jensen – xxx@graintec.com &NewLine;Commercial: {sourcing manager} – xxx@graintec.com &NewLine;&NewLine;The Deadline for the quotation is {quotation date} &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby the tender package for the ${supplier.supply} project as informed. &NewLine;&NewLine;Please go through the documents, and prepare for individual Q&A session on ${project.qaDate} &NewLine;&NewLine;Feel free to forward questions prior to above meeting. &NewLine;&NewLine;Technical: Hans Hansen – xxx@graintec.com &NewLine;Technical: Jens Jensen – xxx@graintec.com &NewLine;Commercial: {sourcing manager} – xxx@graintec.com &NewLine;&NewLine;The Deadline for the quotation is ${project.quotationDate} &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
                                         <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
                                             <div class="modal-body d-flex justify-content-center">
@@ -126,8 +127,10 @@
                                                 <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
                                                 <input type="hidden" field="*{reminder}" name="state.reminder" th:value="${supplier.state.reminder}"/>
                                                 <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{tender}" name="tender" th:value="false">Incomplete</button>
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{tender}" name="tender" th:value="true">Complete</button>
+                                                <button type="submit" th:if="${supplier.state.qa}" class="btn btn-lg btn-danger mx-3 disabled" field="*{tender}" name="tender" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{tender}" name="tender" th:if="${supplier.state.qa == false}" th:value="false">Incomplete</button>
+                                                <button type="submit" th:if="${supplier.state.scoring == false}" class="btn btn-lg btn-success mx-3 disabled" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{tender}" name="tender" th:if="${supplier.state.scoring}" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>
@@ -153,8 +156,10 @@
                                                 <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
                                                 <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
                                                 <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{qa}" name="qa" th:value="false">Incomplete</button>
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{qa}" name="qa" th:value="true">Complete</button>
+                                                <button type="submit" th:if="${supplier.state.reminder}" class="btn btn-lg btn-danger mx-3 disabled" field="*{qa}" name="qa" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{qa}" name="qa" th:if="${supplier.state.reminder == false}" th:value="false">Incomplete</button>
+                                                <button type="submit" th:if="${supplier.state.tender == false}" class="btn btn-lg btn-success mx-3 disabled" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{qa}" name="qa" th:if="${supplier.state.tender}" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>
@@ -180,8 +185,10 @@
                                                 <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
                                                 <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
                                                 <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{reminder}" name="reminder" th:value="false">Incomplete</button>
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{reminder}" name="reminder" th:value="true">Complete</button>
+                                                <button type="submit" th:if="${supplier.state.contract}" class="btn btn-lg btn-danger mx-3 disabled" field="*{reminder}" name="reminder" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{reminder}" name="reminder" th:if="${supplier.state.contract == false}" th:value="false">Incomplete</button>
+                                                <button type="submit" th:if="${supplier.state.qa == false}" class="btn btn-lg btn-success mx-3 disabled" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{reminder}" name="reminder" th:if="${supplier.state.qa}" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>
@@ -204,8 +211,10 @@
                                                 <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
                                                 <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
                                                 <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{scoring}" name="scoring" th:value="false">Incomplete</button>
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" th:if="${supplier.state.tender}" class="btn btn-lg btn-danger mx-3 disabled" field="*{scoring}" name="scoring" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{scoring}" name="scoring" th:if="${supplier.state.tender == false}" th:value="false">Incomplete</button>
+                                                <button type="submit" th:if="${supplier.state.rfi == false}" class="btn btn-lg btn-success mx-3 disabled" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{scoring}" name="scoring" th:if="${supplier.state.rfi}" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>
@@ -223,7 +232,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body" >
-                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Again, we would like to thank you for your valued input and dedication to the ${project.projectName} project. &NewLine;&NewLine;We will revert to you again soon, also for other projects going forward. &NewLine;If you have any question or comments, please do feel free direct them to me. &NewLine;Kind regards &NewLine;(sourcing manager)|" rows="20"></textarea>
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Again, we would like to thank you for your valued input and dedication to the ${project.projectName} project. &NewLine;&NewLine;We will revert to you again soon, also for other projects going forward. &NewLine;If you have any question or comments, please do feel free direct them to me. &NewLine;&NewLine;Kind regards &NewLine;(sourcing manager)|" rows="20"></textarea>
                                         </div>
                                         <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
                                             <div class="modal-body d-flex justify-content-center">
@@ -233,7 +242,8 @@
                                                 <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
                                                 <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
                                                 <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{contract}" name="contract" th:value="false">Incomplete</button>
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{contract}" name="contract" th:value="true">Complete</button>
+                                                <button type="submit" th:if="${supplier.state.reminder == false} and ${supplier.state.contract == false}" class="btn btn-lg btn-success mx-3 disabled" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{contract}" name="contract" th:if="${supplier.state.reminder}" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>

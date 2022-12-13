@@ -1,6 +1,5 @@
 package com.aau.gr3.controllers;
 
-import com.aau.gr3.classes.Email;
 import com.aau.gr3.classes.Project;
 import com.aau.gr3.classes.Scoring;
 import com.aau.gr3.classes.State;
@@ -13,9 +12,11 @@ import com.aau.gr3.util.Connection;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,14 +73,6 @@ public class ProjectController {
     String UpdateState(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, @ModelAttribute("state") State state, Model model) {
         Update update = new Update(Connection.getInstance());
         update.updateSupplierState(id, state);
-        if (state != null) {
-            System.out.println("Scoring:" + state.isScoring());
-            System.out.println("Reminder:" + state.isReminder());
-            System.out.println("QA:" + state.isQa());
-            System.out.println("RFI:" + state.isRfi());
-            System.out.println("Tender:" + state.isTender());
-            System.out.println("Contract:" + state.isContract());
-        }
         return "redirect:/Project/" + pid;
     }
 }
