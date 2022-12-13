@@ -6,6 +6,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,27 @@ public class Read extends Crud {
         System.out.println("No project found");
         return null;
     }
+
+    /**
+     * Gets a supplier from a specific Object id in the database
+     * @param id - Object ID
+     * @return - Return a supplier object. Return null if the supplier does not exist
+     */
+    public Supplier getSupplier(ObjectId id){
+        try {
+            MongoCollection<Supplier> supplierCollection = mongoDatabase.getCollection("Supplier", Supplier.class);
+
+            // Find the project with the specific id
+            Supplier supplier = supplierCollection.find(eq("_id", id)).first();
+
+            return supplier;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("No project found");
+        return null;
+    }
+
     // TODO : Only for testing currently
     public void printProject(Project project){
         System.out.println("ID: " + project.getId());
