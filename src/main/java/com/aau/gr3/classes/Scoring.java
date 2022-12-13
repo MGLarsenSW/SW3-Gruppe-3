@@ -2,6 +2,7 @@ package com.aau.gr3.classes;
 
 // TODO: Add more relevant criteria from problem analysis
 public class Scoring {
+    private String tc;
     private int guarantee;
     private boolean csr;
     private String siteErection;
@@ -13,6 +14,7 @@ public class Scoring {
     public Scoring() {
         this.guarantee = 0;
         this.csr = false;
+        this.tc = "";
         this.siteErection = "";
         this.price = 0;
         this.board = false;
@@ -74,5 +76,13 @@ public class Scoring {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getTc() {
+        return tc;
+    }
+
+    public void setTc(String tc) {
+        this.tc = tc;
     }
 }

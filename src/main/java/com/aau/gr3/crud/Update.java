@@ -35,9 +35,9 @@ public class Update extends Crud {
      * @param scoring - Scoring object
      * @return - Returns true if the scoring was updated successfully otherwise false
      */
-    public boolean updateSupplierScoring(ObjectId id, Scoring scoring){
+    public boolean updateSupplierScoring(String supplierName, Scoring scoring){
         try {
-            mongoDatabase.getCollection("Supplier").updateOne(new org.bson.Document("_id", id), new org.bson.Document("$set", new org.bson.Document("Scoring", scoring)));
+            mongoDatabase.getCollection("Supplier").updateOne(new org.bson.Document("supplierName", supplierName), new org.bson.Document("$set", new org.bson.Document("Scoring", scoring)));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
