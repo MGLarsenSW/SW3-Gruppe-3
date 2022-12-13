@@ -28,11 +28,11 @@ public class ProjectController {
         model.addAttribute("NextID", read.getNextID());
         return "ProjectOverview";
     }
-    @RequestMapping(value = "/ProjectOverview", method = RequestMethod.POST)
+    @PostMapping("/ProjectOverview")
     String CreateProject(@ModelAttribute(name="project") Project project, Model model){
         Create create = new Create(Connection.getInstance());
         create.insertProject(project);
-        return getProjects(model);
+        return "redirect:/ProjectOverview";
     }
 
     @GetMapping("/ProjectOverview/Archived")
@@ -54,7 +54,7 @@ public class ProjectController {
         model.addAttribute("nextObjId", new ObjectId());
         return "ProjectPage";
     }
-    @RequestMapping(value = "/Project/{id}", method = RequestMethod.POST)
+    @PostMapping("/Project/{id}")
     String CreateSupplier(@PathVariable("id") int id, @ModelAttribute(name="supplier") Supplier supplier, Model model) {
         Create create = new Create(Connection.getInstance());
         supplier.setScoring(new Scoring());
@@ -62,15 +62,24 @@ public class ProjectController {
         create.insertSupplier(supplier);
         return getProject(id, model);
     }
-    @GetMapping(value = "/Project/{pid}/remove/{id}")
+    @GetMapping("/Project/{pid}/remove/{id}")
     String DeleteSupplier(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, Model model) {
         Delete delete = new Delete(Connection.getInstance());
         delete.deleteSupplier(id);
         return getProject(pid, model);
     }
-    @PutMapping(value = "/Project/{pid}/update/{id}")
-    String UpdateState(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, @ModelAttribute(name="supplier") Supplier supplier, Model model) {
-
+    @PostMapping("/Project/{pid}/update/{id}")
+    String UpdateState(@PathVariable("pid") int pid, @PathVariable("id") ObjectId id, @ModelAttribute("state") State state, Model model) {
+        Update update = new Update(Connection.getInstance());
+        update.updateSupplierState(id, state);
+        if (state != null) {
+            System.out.println("Scoring:" + state.isScoring());
+            System.out.println("Reminder:" + state.isReminder());
+            System.out.println("QA:" + state.isQa());
+            System.out.println("RFI:" + state.isRfi());
+            System.out.println("Tender:" + state.isTender());
+            System.out.println("Contract:" + state.isContract());
+        }
         return "redirect:/Project/" + pid;
     }
 }

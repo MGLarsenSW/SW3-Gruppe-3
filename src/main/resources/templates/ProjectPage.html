@@ -6,14 +6,6 @@
 </head>
 <body>
     <div th:insert="fragments :: headerProject"></div>
-    <!--<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-        <button type="button" class="btn btn-dark">Button</button>
-        <button type="button" class="btn btn-dark">Button</button>
-        <button type="button" class="btn btn-dark">Button</button>
-        <button type="button" class="btn btn-dark">Button</button>
-        <button type="button" class="btn btn-dark">Button</button>
-        <button type="button" class="btn btn-dark">Button</button>
-    </div>--->
     <div class="px-5" id="view">
         <h1 class="display-1 mb-5">Supplier overview</h1>
         <table class="table align-middle">
@@ -83,12 +75,36 @@
                                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" th:style="|width:${supplier.state.percentage}%|"></div>
                             </div>
                             <div class="row justify-content-between">
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">RFI</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.rfi ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small" data-bs-toggle="modal" th:attr="data-bs-target='#rfiModal'+${supplier.id}">RFI</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.scoring ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#scoringModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Scoring</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.tender ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#tenderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Tender</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.qa ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#qaModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Q&A</button>
                                 <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.reminder ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" data-bs-toggle="modal" th:attr="data-bs-target='#reminderModal'+${supplier.id}" style="width: 4rem; height:4rem; font-size: x-small">Reminder</button>
-                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small">Contract</button>
+                                <button type="button" th:class="|btn btn-sm rounded-pill translate-middle-y ${supplier.state.contract ? 'btn-success bi bi-check' : 'btn-danger bi bi-x'}|" style="width: 4rem; height:4rem; font-size: x-small" data-bs-toggle="modal" th:attr="data-bs-target='#contractModal'+${supplier.id}">Contract</button>
+                            </div>
+                            <!-- Modal RFI -->
+                            <div class="modal fade" th:attr="id='rfiModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="rfiModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="rfiModalLabel">RFI</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
+                                                <input type="hidden" field="*{tender}" name="tender" th:value="${supplier.state.tender}"/>
+                                                <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
+                                                <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
+                                                <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{rfi}" name="rfi" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{rfi}" name="rfi" th:value="true">Complete</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Modal Tender -->
                             <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='tenderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="tenderModalLabel" aria-hidden="true">
@@ -103,10 +119,17 @@
                                         <div class="modal-body">
                                             <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby the tender package for the ${supplier.supply} project as informed. &NewLine;&NewLine;Please go through the documents, and prepare for individual Q&A session on {Q&A date} &NewLine;&NewLine;Feel free to forward questions prior to above meeting. &NewLine;&NewLine;Technical: Hans Hansen – xxx@graintec.com &NewLine;Technical: Jens Jensen – xxx@graintec.com &NewLine;Commercial: {sourcing manager} – xxx@graintec.com &NewLine;&NewLine;The Deadline for the quotation is {quotation date} &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Confirm</button>
-                                        </div>
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
+                                                <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
+                                                <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
+                                                <input type="hidden" field="*{reminder}" name="state.reminder" th:value="${supplier.state.reminder}"/>
+                                                <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{tender}" name="tender" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{tender}" name="tender" th:value="true">Complete</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -123,16 +146,22 @@
                                         <div class="modal-body">
                                             <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Hereby an invite for a Q&A session in regards to the forwarded tender material. &NewLine;&NewLine;Kind regards, &NewLine;&NewLine;{sourcing manager}|" rows="20"></textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Confirm</button>
-                                        </div>
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
+                                                <input type="hidden" field="*{tender}" name="tender" th:value="${supplier.state.tender}"/>
+                                                <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
+                                                <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
+                                                <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{qa}" name="qa" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{qa}" name="qa" th:value="true">Complete</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                             <!-- Modal Reminder -->
                             <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">
-<!--                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">-->
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -142,18 +171,19 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                        <!--reminder-->
-<!--                                            <th:formaction th:each="reminder : ${reminderEmail}" >-->
-<!--                                                <textarea class="form-control" th:text="${supplier.supplierName}" rows="20"></textarea>-->
-<!--                                                <textarea class="form-control" th:text="${reminder}" rows="20"></textarea>-->
-<!--                                            </th:formaction>-->
                                             <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;A kind reminder that today is the deadline for the ${supplier.supply} package. &NewLine;&NewLine;Kind regards, &NewLine;{sourcing manager}|" rows="20"></textarea>
-
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Confirm</button>
-                                        </div>
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
+                                                <input type="hidden" field="*{tender}" name="tender" th:value="${supplier.state.tender}"/>
+                                                <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
+                                                <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
+                                                <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{reminder}" name="reminder" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{reminder}" name="reminder" th:value="true">Complete</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -167,10 +197,43 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${updateSupplier}" th:method="PUT">
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
                                             <div class="modal-body d-flex justify-content-center">
-                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{getState().scoring}" th:value="true">Complete</button>
-                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{getState().scoring}" th:value="false">Incomplete</button>
+                                                <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
+                                                <input type="hidden" field="*{tender}" name="tender" th:value="${supplier.state.tender}"/>
+                                                <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
+                                                <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
+                                                <input type="hidden" field="*{contract}" name="contract" th:value="${supplier.state.contract}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{scoring}" name="scoring" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{scoring}" name="scoring" th:value="true">Complete</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Contract -->
+                            <div class="modal fade" th:each="supplier : ${supplierList}" th:attr="id='contractModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="contractModalLabel" aria-hidden="true">
+                                <!--                            <div class="modal fade" th:each="reminder : ${reminderEmail}" th:attr="id='reminderModal'+${supplier.id}" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel" aria-hidden="true">-->
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="contractModalLabel">Contract</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" >
+                                            <textarea class="form-control" th:text="|Dear ${supplier.contactPerson}, &NewLine;&NewLine;Again, we would like to thank you for your valued input and dedication to the ${project.projectName} project. &NewLine;&NewLine;We will revert to you again soon, also for other projects going forward. &NewLine;If you have any question or comments, please do feel free direct them to me. &NewLine;Kind regards &NewLine;(sourcing manager)|" rows="20"></textarea>
+                                        </div>
+                                        <form action="#" th:action="@{/Project/{pid}/update/{id}(pid = ${project.id}, (id = ${supplier.id}))}" th:object="${state}" method="post">
+                                            <div class="modal-body d-flex justify-content-center">
+                                                <input type="hidden" field="*{rfi}" name="rfi" th:value="${supplier.state.rfi}"/>
+                                                <input type="hidden" field="*{tender}" name="tender" th:value="${supplier.state.tender}"/>
+                                                <input type="hidden" field="*{qa}" name="qa" th:value="${supplier.state.qa}"/>
+                                                <input type="hidden" field="*{scoring}" name="scoring" th:value="${supplier.state.scoring}"/>
+                                                <input type="hidden" field="*{reminder}" name="reminder" th:value="${supplier.state.reminder}"/>
+                                                <button type="submit" class="btn btn-lg btn-danger mx-3" field="*{contract}" name="contract" th:value="false">Incomplete</button>
+                                                <button type="submit" class="btn btn-lg btn-success mx-3" field="*{contract}" name="contract" th:value="true">Complete</button>
                                             </div>
                                         </form>
                                     </div>

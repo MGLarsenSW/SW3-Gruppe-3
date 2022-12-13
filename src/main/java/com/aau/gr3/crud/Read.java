@@ -87,7 +87,7 @@ public class Read extends Crud {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("No project found");
+        System.out.println("No supplier found");
         return null;
     }
 
