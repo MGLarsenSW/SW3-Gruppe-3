@@ -6,7 +6,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +40,6 @@ public class Read extends Crud {
         return null;
     }
 
-    // TODO: Only for testing currently
-    public void printOverview(List<Project> list){
-        for (Project project : list) {
-            System.out.println("ID: " + project.getId());
-            System.out.println("Project name: " + project.getProjectName());
-            System.out.println("Creation date: " + project.getCreationDate());
-            System.out.println("Deadline date: " + project.getDeadlineDate());
-        }
-    }
-
     /**
      * Gets a project from a specific id in the database
      * @param pid - Project ID
@@ -69,36 +58,6 @@ public class Read extends Crud {
         }
         System.out.println("No project found");
         return null;
-    }
-
-    /**
-     * Gets a supplier from a specific Object id in the database
-     * @param id - Object ID
-     * @return - Return a supplier object. Return null if the supplier does not exist
-     */
-    public Supplier getSupplier(ObjectId id){
-        try {
-            MongoCollection<Supplier> supplierCollection = mongoDatabase.getCollection("Supplier", Supplier.class);
-
-            // Find the project with the specific id
-            Supplier supplier = supplierCollection.find(eq("_id", id)).first();
-
-            return supplier;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("No supplier found");
-        return null;
-    }
-
-    // TODO : Only for testing currently
-    public void printProject(Project project){
-        System.out.println("ID: " + project.getId());
-        System.out.println("Project name: " + project.getProjectName());
-        System.out.println("Deadline date: " + project.getDeadlineDate());
-        System.out.println("Creation date: " + project.getCreationDate());
-        System.out.println("Quotation date: " + project.getQuotationDate());
-        System.out.println("QA date: " + project.getQaDate());
     }
 
     /**
@@ -153,33 +112,6 @@ public class Read extends Crud {
         }
         System.out.println("No supply found");
         return null;
-    }
-
-    // TODO : Only for testing currently
-    public void printSupplierList(List<Supplier> list){
-        for (Supplier supplier : list){
-            System.out.println("Supplier ID: " + supplier.getId());
-            System.out.println("Project ID: " + supplier.getPid());
-            System.out.println("Contact person: " + supplier.getContactPerson());
-            System.out.println("Contact mail: " + supplier.getContactMail());
-            System.out.println("Supplier name: " + supplier.getSupplierName());
-            System.out.println("Supply: " + supplier.getSupply());
-
-            if (supplier.getState() != null){
-                System.out.println("State: " + supplier.getState());
-                System.out.println(" -> QA: " + supplier.getState().isQa());
-                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
-                System.out.println(" -> Contract: " + supplier.getState().isContract());
-                System.out.println(" -> RFI: " + supplier.getState().isRfi());
-                System.out.println(" -> Quotation: " + supplier.getState().isScoring());
-            }
-
-            if (supplier.getScoring() != null) {
-                System.out.println("Scoring: " + supplier.getScoring());
-                System.out.println(" -> Price: " + supplier.getScoring().getPrice());
-                System.out.println(" -> Score: " + supplier.getScoring().getScore());
-            }
-        }
     }
 
     /**

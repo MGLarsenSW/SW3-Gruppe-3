@@ -6,7 +6,7 @@ public class Scoring {
     private int guarantee;
     private boolean csr;
     private String siteErection;
-    private int price; // 32-bit limitation???
+    private int price; // 32-bit limitation? Consider using long instead
     private boolean board;
     private boolean travel;
     private int score;

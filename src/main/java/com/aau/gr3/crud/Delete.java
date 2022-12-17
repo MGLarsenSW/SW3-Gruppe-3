@@ -9,7 +9,7 @@ public class Delete extends Crud {
         super(mongoDatabase);
     }
 
-    // TODO: Consider refactoring these methods into a single method that takes an enum as a parameter
+    // TODO: Consider refactoring these methods into a single method
 
     /**
      * Deletes a project from the database

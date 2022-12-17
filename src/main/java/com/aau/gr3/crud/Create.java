@@ -14,7 +14,7 @@ public class Create extends Crud {
         super(mongoDatabase);
     }
 
-    // TODO: Consider refactoring these methods into a single method that takes a generic object as a parameter
+    // TODO: Consider refactoring these methods into a single method
 
     /**
      * Creates a new project in the database

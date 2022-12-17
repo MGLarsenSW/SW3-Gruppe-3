@@ -2,7 +2,6 @@ package com.aau.gr3.classes;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
-
 public class Supplier{
     private ObjectId id;
     private int pid;

@@ -5,7 +5,6 @@ import com.aau.gr3.classes.Supplier;
 import com.aau.gr3.crud.Read;
 import com.aau.gr3.crud.Update;
 import com.aau.gr3.util.Connection;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;

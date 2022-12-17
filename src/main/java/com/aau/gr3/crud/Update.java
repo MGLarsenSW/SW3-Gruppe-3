@@ -31,7 +31,7 @@ public class Update extends Crud {
 
     /**
      * Updates the scoring of a project
-     * @param id - Supplier ID (ObjectID)
+     * @param supplierName - Supplier name (These will typically be unique)
      * @param scoring - Scoring object
      * @return - Returns true if the scoring was updated successfully otherwise false
      */
