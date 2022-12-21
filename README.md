@@ -3,6 +3,8 @@ Aalborg University, Copenhagen (AAU)
 Software P3 Project   
 Group 3
 
+![Website](https://img.shields.io/website?down_message=offline&label=Graintec&up_message=online&url=https://graintec-sourcing-management.herokuapp.com/ProjectOverview)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
