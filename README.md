@@ -22,7 +22,8 @@ The project was developed using Java 18 and Maven 3.8.6, but has not been tested
 ## Building & running
 1. Clone the repository
 2. Open the project in IDE of your choice
-3. Create a ``ProviderName`` file under ``src/main/resources`` and insert your own MongoDB URI
+3. Create a ``ProviderName`` file under ``src/main/resources`` and insert your own MongoDB URI.   
+   (or use environment variable ``MONGODB_URI`` for URI)
 4. Build the project using Maven
 5. Run the project
 6. Open a browser and go to **localhost:8080**
