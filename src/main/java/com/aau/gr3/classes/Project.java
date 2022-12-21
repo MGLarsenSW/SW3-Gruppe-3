@@ -1,119 +1,80 @@
 package com.aau.gr3.classes;
 
-import java.util.Date;
-
 public class Project {
-    protected int _id;
-    protected String projectName;
-    protected String supply;
-    protected String supplier;
-    protected String contactMail;
-    protected String contactPerson;
-    private Date deadlineDate;
-    protected Date QADate;
+    private String image;
+    private int id;
+    private String projectName;
+    private String qaDate;
+    private String quotationDate;
+    private String creationDate;
+    private String deadlineDate;
 
-    private boolean stateRFI;
-    private boolean stateTender;
-    private boolean stateQA;
-    private boolean stateReminder;
-    private boolean stateQuotation;
-    private boolean stateContract;
+    public Project() {
 
-    public Project(int _id, String projectName, String supply, String supplier, String contactMail, String contactPerson, Date deadlineDate,
-                   Date QADate) {
-        this._id = _id;
+    } // Empty constructor for POJO codec
+
+    public Project(String image ,int id, String projectName, String qaDate, String quotationDate, String creationDate, String deadlineDate) {
+        this.image = image;
+        this.id = id;
         this.projectName = projectName;
-        this.supply = supply;
-        this.supplier = supplier;
-        this.contactMail = contactMail;
-        this.contactPerson = contactPerson;
+        this.qaDate = qaDate;
+        this.quotationDate = quotationDate;
+        this.creationDate = creationDate;
         this.deadlineDate = deadlineDate;
-        this.QADate = QADate;
-        this.stateRFI = false;
-        this.stateTender = false;
-        this.stateQA = false;
-        this.stateReminder = false;
-        this.stateQuotation = false;
-        this.stateContract = false;
+    }
+    public String getImage() {
+        return image;
     }
 
-    public int get_id() {
-        return _id;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProjectName() {
         return projectName;
     }
 
-    public String getSupply() {
-        return supply;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getSupplier() {
-        return supplier;
+    public String getQaDate() {
+        return qaDate;
     }
 
-    public String getContactMail() {
-        return contactMail;
+    public void setQaDate(String qaDate) {
+        this.qaDate = qaDate;
     }
 
-    public String getContactPerson() {
-        return contactPerson;
+    public String getQuotationDate() {
+        return quotationDate;
     }
 
-    public Date getDeadlineDate() {
+    public void setQuotationDate(String quotationDate) {
+        this.quotationDate = quotationDate;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getDeadlineDate() {
         return deadlineDate;
     }
 
-    public Date getQADate() {
-        return QADate;
-    }
-
-    public boolean isStateRFI() {
-        return stateRFI;
-    }
-
-    public boolean isStateTender() {
-        return stateTender;
-    }
-
-    public boolean isStateQA() {
-        return stateQA;
-    }
-
-    public boolean isStateReminder() {
-        return stateReminder;
-    }
-
-    public boolean isStateQuotation() {
-        return stateQuotation;
-    }
-
-    public boolean isStateContract() {
-        return stateContract;
-    }
-
-    public void setStateRFI(boolean stateRFI) {
-        this.stateRFI = stateRFI;
-    }
-
-    public void setStateTender(boolean stateTender) {
-        this.stateTender = stateTender;
-    }
-
-    public void setStateQA(boolean stateQA) {
-        this.stateQA = stateQA;
-    }
-
-    public void setStateReminder(boolean stateReminder) {
-        this.stateReminder = stateReminder;
-    }
-
-    public void setStateQuotation(boolean stateQuotation) {
-        this.stateQuotation = stateQuotation;
-    }
-
-    public void setStateContract(boolean stateContract) {
-        this.stateContract = stateContract;
+    public void setDeadlineDate(String deadlineDate) {
+        this.deadlineDate = deadlineDate;
     }
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+  <th:block th:replace="fragments :: meta"></th:block>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+</head>
+<div th:insert="fragments :: header"></div>
+
+<body>
+<div class="px-5" id="view">
+  <h1>Login</h1>
+  <form th:action="@{/login}" th:object="${User}" method="post">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Username</span>
+      </div>
+      <input type="text" id="username" name="username" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon2">Password</span>
+      </div>
+      <input type="password" id="password" name="password" class="form-control" aria-label="Password" aria-describedby="basic-addon1">
+    </div>
+    <br/>
+    <input type="submit" value="Log in">
+  </form>
+</div>
+  <div th:insert="fragments :: footer"></div>
+
+</body>
+</html>
